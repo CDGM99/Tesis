@@ -1,0 +1,269 @@
+import { Formik, Form } from "formik";
+import validations from "./schemas/validations";
+import form from "./schemas/form";
+import initialValues from "./schemas/initialValues";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {
+  useCreateOrdenesMutation,
+  useEditOrdenesMutation,
+  useLazyGetOrdenesByIdQuery,
+} from "../../services/OrdenesServices";
+import AddOrden from "./components/orden.info";
+
+const getModifiedFields = (originalData, newData) => {
+  return Object.fromEntries(
+    Object.entries(newData).filter(([key, value]) => {
+      return originalData[key] !== value;
+    })
+  );
+};
+
+function NewOrden() {
+  const [
+    createOrden,
+    {
+      isSuccess: isSuccessC,
+      isLoading: isLoadingC,
+      isError: isErrorC,
+      error: errorC,
+    },
+  ] = useCreateOrdenesMutation();
+  const [
+    editOrden,
+    {
+      isSuccess: isSuccessE,
+      isLoading: isLoadingE,
+      isError: isErrorE,
+      error: errorE,
+    },
+  ] = useEditOrdenesMutation();
+
+  const { id } = useParams();
+  const { formId, formField } = form;
+  const currentValidation = validations[0];
+  const [oldValues, setOldValues] = useState();
+  const navigate = useNavigate();
+
+  const [getOrdenById, { data: orden }] = useLazyGetOrdenesByIdQuery();
+  const submitForm = async (values, actions) => {
+    try {
+      if (!id) {
+        await createOrden(values);
+      } else {
+        const modifiedFields = getModifiedFields(oldValues, values);
+        if (Object.keys(modifiedFields).length !== 0) {
+          await editOrden({ id: id, ...modifiedFields });
+        }
+      }
+      location.pathname.includes("/dashboard/ordenes")
+        ? navigate(`/dashboard/ordenes`)
+        : navigate(`/dashe/ordenes`);
+      if (isSuccessC || isSuccessE) {
+        actions.setSubmitting(false);
+        actions.resetForm();
+      }
+    } catch (error) {
+      console.error(error);
+      actions.setSubmitting(true);
+    }
+  };
+
+  const handleSubmit = (values, actions) => {
+    submitForm(values, actions);
+  };
+
+  return (
+    <div className="mt-5 mb-20">
+      <div className="flex justify-center items-center">
+        <div className="w-full lg:w-8/12">
+          <div className="mt-6 mb-8 text-center">
+            {/* prueba */}
+
+            {location.pathname.includes("/dashboard") ? (
+              <>
+                <h1 className="text-3xl font-bold">Ordenes</h1>
+                <div className="text-xl font-normal text-black">
+                  {!id
+                    ? "Introduzca la información relacionada a la orden por agregar"
+                    : "Edite la información relacionada a la orden"}
+                </div>
+              </>
+            ) : (
+              <>
+                <h1 className="text-3xl font-bold">Ventas</h1>
+                <div className="text-xl font-normal text-black">
+                  {!id
+                    ? "Introduzca la información relacionada a la venta por agregar"
+                    : "Edite la información relacionada a la venta"}
+                </div>
+              </>
+            )}
+
+            {/* final de la prueba */}
+
+            {/* <div className="mb-1">
+              <h1 className="text-3xl font-bold">Ordenes</h1>
+            </div>
+            <div className="text-xl font-normal text-black">
+              {!id
+                ? "Introduzca la información relacionada a la orden por agregar"
+                : "Edite la información relacionada a la orden"}
+            </div> */}
+          </div>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={currentValidation}
+            onSubmit={handleSubmit}
+          >
+            {({ values, errors, touched, setFieldValue, handleBlur }) => {
+              useEffect(() => {
+                if (id) {
+                  getOrdenById(id)
+                    .unwrap()
+                    .then((res) => {
+                      setOldValues(res);
+                      setFieldValue(
+                        formField.embajador.name,
+                        res?.embajador,
+                        true
+                      );
+                      setFieldValue(
+                        formField.order_id.name,
+                        res?.order_id,
+                        true
+                      );
+                      setFieldValue(formField.number.name, res?.number, true);
+                      setFieldValue(
+                        formField.order_key.name,
+                        res?.order_key,
+                        true
+                      );
+                      setFieldValue(formField.status.name, res?.status, true);
+                      setFieldValue(
+                        formField.date_created.name,
+                        res?.date_created,
+                        true
+                      );
+                      setFieldValue(
+                        formField.date_modified.name,
+                        res?.date_modified,
+                        true
+                      );
+                      setFieldValue(
+                        formField.discount_total.name,
+                        res?.discount_total,
+                        true
+                      );
+                      setFieldValue(
+                        formField.discount_tax.name,
+                        res?.discount_tax,
+                        true
+                      );
+                      setFieldValue(
+                        formField.shipping_total.name,
+                        res?.shipping_total,
+                        true
+                      );
+                      setFieldValue(
+                        formField.cart_tax.name,
+                        res?.cart_tax,
+                        true
+                      );
+                      setFieldValue(formField.total.name, res?.total, true);
+                      setFieldValue(
+                        formField.customer_id.name,
+                        res?.customer_id,
+                        true
+                      );
+                      setFieldValue(
+                        formField.customer_user_agent.name,
+                        res?.customer_user_agent,
+                        true
+                      );
+                      setFieldValue(
+                        formField.billing_address.name,
+                        res?.billing_address,
+                        true
+                      );
+                      setFieldValue(
+                        formField.billing_email.name,
+                        res?.billing_email,
+                        true
+                      );
+                      setFieldValue(
+                        formField.billing_phone.name,
+                        res?.billing_phone,
+                        true
+                      );
+                      setFieldValue(
+                        formField.shipping_address.name,
+                        res?.shipping_address,
+                        true
+                      );
+                      setFieldValue(
+                        formField.payment_method.name,
+                        res?.payment_method,
+                        true
+                      );
+                      setFieldValue(
+                        formField.date_paid.name,
+                        res?.date_paid,
+                        true
+                      );
+                      setFieldValue(formField.paid.name, res?.paid, true);
+                      setFieldValue(
+                        formField.productos.name,
+                        res?.productos,
+                        true
+                      );
+                    });
+                }
+              }, [id]);
+
+              return (
+                <Form id={formId} autoComplete="off">
+                  <div className="h-full">
+                    <div className="p-3">
+                      <div>
+                        <AddOrden
+                          formData={{
+                            values,
+                            touched,
+                            formField,
+                            errors,
+                            handleBlur,
+                          }}
+                        />
+                        <div className="mt-2 w-full flex justify-between">
+                          <button
+                            onClick={(e) => {
+                              location.pathname.includes("/dashboard/ordenes")
+                                ? navigate(`/dashboard/ordenes`)
+                                : navigate(`/dashe/ordenes`);
+                            }}
+                            className="bg-primary text-white px-4 py-2 rounded-md"
+                          >
+                            Cancelar
+                          </button>
+                          <button
+                            type="submit"
+                            className="bg-dark text-blue-400 px-4 py-2 rounded-md"
+                          >
+                            Aceptar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Form>
+              );
+            }}
+          </Formik>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default NewOrden;
