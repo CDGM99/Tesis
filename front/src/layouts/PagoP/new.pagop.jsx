@@ -124,6 +124,7 @@ function NewPagop() {
                             formField,
                             errors,
                             handleBlur,
+                            setFieldValue,
                           }}
                         />
                         <div className="mt-2 w-full flex justify-between">

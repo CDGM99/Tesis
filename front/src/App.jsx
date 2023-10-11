@@ -9,11 +9,13 @@ import DashE from "./components/DashE";
 import PagoE from "./layouts/PagoE";
 import PagoP from "./layouts/PagoP";
 import Facturasi from "./layouts/FacturasI";
+import Salidase from "./layouts/Salidase";
 import NewAlmacen from "./layouts/Almacenes/new.almacen";
 import NewFacturasi from "./layouts/Facturas Internas/new.facturasi";
 import NewPagop from "./layouts/PagoP/new.pagop";
 import NewPagoe from "./layouts/PagoE/new.pagoe";
 import NewOrden from "./layouts/Ordenes/new.orden";
+import NewProducto from "./layouts/Inventario/new.inventario";
 
 function App() {
   return (
@@ -44,9 +46,12 @@ function App() {
         <Route path="almacenes/create" element={<NewAlmacen />}></Route>
         <Route path="almacenes/edit/:id" element={<NewAlmacen />}></Route>
         <Route path="inventario" element={<Inventario />}></Route>
+        <Route path="inventario/create" element={<NewProducto />}></Route>
+        <Route path="inventario/edit/:id" element={<NewProducto />}></Route>
         <Route path="ordenes" element={<Ordenes />}></Route>
         <Route path="ordenes/create" element={<NewOrden />}></Route>
         <Route path="ordenes/edit/:id" element={<NewOrden />}></Route>
+        <Route path="salidase" element={<Salidase />}></Route>
       </Route>
     </Routes>
   );

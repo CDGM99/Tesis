@@ -18,15 +18,6 @@ function FormField({
   ...rest
 }) {
   const Comp = select ? Select : Input;
-  // const [state, setState] = useState(undefined);
-
-  // useEffect(() => {
-  //   if (success) {
-  //     setState("border-green-600 focus:border-green-600");
-  //   } else if (error) {
-  //     setState("border-red-600 focus:border-red-600");
-  //   }
-  // }, [success, error]);
 
   return (
     <div className="flex flex-col gap-1 w-full p-1">

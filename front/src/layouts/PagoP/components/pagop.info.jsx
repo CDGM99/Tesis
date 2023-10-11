@@ -8,7 +8,7 @@ import {
 } from "../../../components/ui/select";
 
 function AddPagop({ formData }) {
-  const { formField, values, handleBlur } = formData;
+  const { formField, values, handleBlur, setFieldValue } = formData;
   const { name, code, nit, contract, account, address, paid } = formField;
   const {
     name: nameV,
@@ -19,6 +19,12 @@ function AddPagop({ formData }) {
     address: addressV,
     paid: paidV,
   } = values;
+
+  const handleValueChange = (value) => {
+    const isPaid = value === "Pagado";
+    setFieldValue(paid.name, isPaid);
+  };
+  const displayedValue = paidV ? "Pagado" : "No pagado";
 
   return (
     <div className="md:mt-4">
@@ -101,8 +107,8 @@ function AddPagop({ formData }) {
               select
               name={paid.name}
               label={paid.label}
-              value={paidV}
-              // onValueChange={(value) => setFieldValue(paid.name, value, true)}
+              value={displayedValue}
+              onValueChange={handleValueChange}
               onBlur={handleBlur}
             >
               <SelectTrigger>

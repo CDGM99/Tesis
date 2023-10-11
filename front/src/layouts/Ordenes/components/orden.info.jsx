@@ -1,8 +1,14 @@
 import PropTypes from "prop-types";
 import FormField from "../../../components/FormField";
+import {
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../../components/ui/select";
 
 function AddOrden({ formData }) {
-  const { formField, values, handleBlur } = formData;
+  const { formField, values, handleBlur, setFieldValue } = formData;
   const {
     embajador,
     order_id,
@@ -51,6 +57,12 @@ function AddOrden({ formData }) {
     paid: paidV,
     productos: productosV,
   } = values;
+
+  const handleValueChange = (value) => {
+    const isPaid = value === "Pagado";
+    setFieldValue(paid.name, isPaid);
+  };
+  const displayedValue = paidV ? "Pagado" : "No pagado";
 
   return (
     <div className="md:mt-4">
@@ -299,13 +311,24 @@ function AddOrden({ formData }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="col-span-1">
             <FormField
-              type={paid.type}
-              label={paid.label}
+              select
               name={paid.name}
-              value={paidV}
-              placeholder={paid.placeholder}
+              label={paid.label}
+              value={displayedValue}
+              onValueChange={handleValueChange}
               onBlur={handleBlur}
-            />
+            >
+              <SelectTrigger>
+                <SelectValue placeholder={"Seleccione"} />
+              </SelectTrigger>
+              <SelectContent>
+                {["Pagado", "No pagado"].map((pageSize) => (
+                  <SelectItem key={pageSize} value={pageSize}>
+                    {pageSize}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </FormField>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

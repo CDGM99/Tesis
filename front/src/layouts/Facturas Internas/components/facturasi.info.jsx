@@ -13,7 +13,7 @@ function AddFacturasi({ formData }) {
   const { data } = useGetProductosQuery(undefined, {
     refetchOnReconnect: true,
   });
-  const { formField, values, handleBlur } = formData;
+  const { formField, values, handleBlur, setFieldValue } = formData;
   const { producto, worker_in_charge, paid, cost, date_created, description } =
     formField;
   const {
@@ -24,6 +24,12 @@ function AddFacturasi({ formData }) {
     date_created: date_createdV,
     description: descriptionV,
   } = values;
+
+  const handleValueChange = (value) => {
+    const isPaid = value === "Pagado";
+    setFieldValue(paid.name, isPaid);
+  };
+  const displayedValue = paidV ? "Pagado" : "No pagado";
 
   return (
     <div className="md:mt-4">
@@ -102,8 +108,8 @@ function AddFacturasi({ formData }) {
               select
               name={paid.name}
               label={paid.label}
-              value={paidV}
-              // onValueChange={(value) => setFieldValue(paid.name, value, true)}
+              value={displayedValue}
+              onValueChange={handleValueChange}
               onBlur={handleBlur}
             >
               <SelectTrigger>

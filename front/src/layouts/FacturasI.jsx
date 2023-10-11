@@ -81,7 +81,7 @@ const Facturasi = () => {
             </Button>{" "}
             <Delete
               title={`Borrar ${row.name}`}
-              message="Esta seguro que desea eliminar esta factura interna"
+              message="¿Esta seguro que desea eliminar esta factura interna?"
               action={() => deleteFacturasi(row.id)}
             >
               <Button variant={"ghost"} size={"icon"}>

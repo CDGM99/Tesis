@@ -1,7 +1,6 @@
 import { Tabla } from "../components/Tabla";
 import { Button } from "../components/ui/button";
 import { Pen, PlusSquare, Trash } from "lucide-react";
-
 import React from "react";
 import Delete from "../components/Delete";
 import {
@@ -12,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 const Almacenes = () => {
   const navigate = useNavigate();
+
   const [
     deleteAlmacenes,
     {
@@ -57,7 +57,7 @@ const Almacenes = () => {
             </Button>{" "}
             <Delete
               title={`Borrar ${row.name}`}
-              message="Esta seguro que desea eliminar este almacén"
+              message="¿Esta seguro que desea eliminar este almacén?"
               action={() => deleteAlmacenes(row.id)}
             >
               <Button variant={"ghost"} size={"icon"}>

@@ -5,11 +5,11 @@ import initialValues from "./schemas/initialValues";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
-  useCreateOrdenesMutation,
-  useEditOrdenesMutation,
-  useLazyGetOrdenesByIdQuery,
-} from "../../services/OrdenesServices";
-import AddOrden from "./components/orden.info";
+  useCreateProductosMutation,
+  useEditProductosMutation,
+  useLazyGetProductosByIdQuery,
+} from "../../services/InventarioServices";
+import AddProducto from "./components/inventario.info";
 
 const getModifiedFields = (originalData, newData) => {
   return Object.fromEntries(
@@ -19,25 +19,25 @@ const getModifiedFields = (originalData, newData) => {
   );
 };
 
-function NewOrden() {
+function NewProducto() {
   const [
-    createOrden,
+    createProducto,
     {
       isSuccess: isSuccessC,
       isLoading: isLoadingC,
       isError: isErrorC,
       error: errorC,
     },
-  ] = useCreateOrdenesMutation();
+  ] = useCreateProductosMutation();
   const [
-    editOrden,
+    editProducto,
     {
       isSuccess: isSuccessE,
       isLoading: isLoadingE,
       isError: isErrorE,
       error: errorE,
     },
-  ] = useEditOrdenesMutation();
+  ] = useEditProductosMutation();
 
   const { id } = useParams();
   const { formId, formField } = form;
@@ -45,20 +45,18 @@ function NewOrden() {
   const [oldValues, setOldValues] = useState();
   const navigate = useNavigate();
 
-  const [getOrdenById, { data: orden }] = useLazyGetOrdenesByIdQuery();
+  const [getProductoById, { data: producto }] = useLazyGetProductosByIdQuery();
   const submitForm = async (values, actions) => {
     try {
       if (!id) {
-        await createOrden(values);
+        await createProducto(values);
       } else {
         const modifiedFields = getModifiedFields(oldValues, values);
         if (Object.keys(modifiedFields).length !== 0) {
-          await editOrden({ id: id, ...modifiedFields });
+          await editProducto({ id: id, ...modifiedFields });
         }
       }
-      location.pathname.includes("/dashboard/ordenes")
-        ? navigate(`/dashboard/ordenes`)
-        : navigate(`/dashe/ordenes`);
+      navigate("/dashboard/inventario");
       if (isSuccessC || isSuccessE) {
         actions.setSubmitting(false);
         actions.resetForm();
@@ -78,27 +76,14 @@ function NewOrden() {
       <div className="flex justify-center items-center">
         <div className="w-full lg:w-8/12">
           <div className="mt-6 mb-8 text-center">
-            {/* prueba */}
-
-            {location.pathname.includes("/dashboard") ? (
-              <>
-                <h1 className="text-3xl font-bold">Ordenes</h1>
-                <div className="text-xl font-normal text-black">
-                  {!id
-                    ? "Introduzca la información relacionada a la orden por agregar"
-                    : "Edite la información relacionada a la orden"}
-                </div>
-              </>
-            ) : (
-              <>
-                <h1 className="text-3xl font-bold">Ventas</h1>
-                <div className="text-xl font-normal text-black">
-                  {!id
-                    ? "Introduzca la información relacionada a la venta por agregar"
-                    : "Edite la información relacionada a la venta"}
-                </div>
-              </>
-            )}
+            <div className="mb-1">
+              <h1 className="text-3xl font-bold">Inventario</h1>
+            </div>
+            <div className="text-xl font-normal text-black">
+              {!id
+                ? "Introduzca la información relacionada al producto por agregar"
+                : "Edite la información relacionada al producto"}
+            </div>
           </div>
           <Formik
             initialValues={initialValues}
@@ -108,27 +93,26 @@ function NewOrden() {
             {({ values, errors, touched, setFieldValue, handleBlur }) => {
               useEffect(() => {
                 if (id) {
-                  getOrdenById(id)
+                  getProductoById(id)
                     .unwrap()
                     .then((res) => {
+                      console.log(res);
                       setOldValues(res);
                       setFieldValue(
-                        formField.embajador.name,
-                        res?.embajador,
+                        formField.almacen.name,
+                        res?.almacen.name,
                         true
                       );
                       setFieldValue(
-                        formField.order_id.name,
-                        res?.order_id,
+                        formField.proveedor.name,
+                        res?.proveedor.name,
                         true
                       );
-                      setFieldValue(formField.number.name, res?.number, true);
-                      setFieldValue(
-                        formField.order_key.name,
-                        res?.order_key,
-                        true
-                      );
-                      setFieldValue(formField.status.name, res?.status, true);
+                      setFieldValue(formField.name.name, res?.name, true);
+                      setFieldValue(formField.sku.name, res?.sku, true);
+                      setFieldValue(formField.picture.name, res?.picture, true);
+                      setFieldValue(formField.brand.name, res?.brand, true);
+                      setFieldValue(formField.slug.name, res?.slug, true);
                       setFieldValue(
                         formField.date_created.name,
                         res?.date_created,
@@ -139,71 +123,54 @@ function NewOrden() {
                         res?.date_modified,
                         true
                       );
+                      setFieldValue(formField.type.name, res?.type, true);
+                      setFieldValue(formField.status.name, res?.status, true);
+                      setFieldValue(formField.on_sale.name, res?.on_sale, true);
                       setFieldValue(
-                        formField.discount_total.name,
-                        res?.discount_total,
+                        formField.description.name,
+                        res?.description,
                         true
                       );
                       setFieldValue(
-                        formField.discount_tax.name,
-                        res?.discount_tax,
+                        formField.short_description.name,
+                        res?.short_description,
+                        true
+                      );
+                      setFieldValue(formField.price.name, res?.price, true);
+                      setFieldValue(
+                        formField.regular_price.name,
+                        res?.regular_price,
                         true
                       );
                       setFieldValue(
-                        formField.shipping_total.name,
-                        res?.shipping_total,
+                        formField.stock_quantity.name,
+                        res?.stock_quantity,
+                        true
+                      );
+                      setFieldValue(formField.cost.name, res?.cost, true);
+                      setFieldValue(
+                        formField.product_id.name,
+                        res?.product_id,
+                        true
+                      );
+                      setFieldValue(formField.weigth.name, res?.weigth, true);
+                      setFieldValue(formField.format.name, res?.format, true);
+                      setFieldValue(formField.volume.name, res?.volume, true);
+                      setFieldValue(
+                        formField.caducity_date.name,
+                        res?.caducity_date,
                         true
                       );
                       setFieldValue(
-                        formField.cart_tax.name,
-                        res?.cart_tax,
+                        formField.production_date.name,
+                        res?.production_date,
                         true
                       );
-                      setFieldValue(formField.total.name, res?.total, true);
+                      setFieldValue(formField.amp.name, res?.amp, true);
+                      setFieldValue(formField.volt.name, res?.volt, true);
                       setFieldValue(
-                        formField.customer_id.name,
-                        res?.customer_id,
-                        true
-                      );
-                      setFieldValue(
-                        formField.customer_user_agent.name,
-                        res?.customer_user_agent,
-                        true
-                      );
-                      setFieldValue(
-                        formField.billing_address.name,
-                        res?.billing_address,
-                        true
-                      );
-                      setFieldValue(
-                        formField.billing_email.name,
-                        res?.billing_email,
-                        true
-                      );
-                      setFieldValue(
-                        formField.billing_phone.name,
-                        res?.billing_phone,
-                        true
-                      );
-                      setFieldValue(
-                        formField.shipping_address.name,
-                        res?.shipping_address,
-                        true
-                      );
-                      setFieldValue(
-                        formField.payment_method.name,
-                        res?.payment_method,
-                        true
-                      );
-                      setFieldValue(
-                        formField.date_paid.name,
-                        res?.date_paid,
-                        true
-                      );
-                      setFieldValue(formField.paid.name, res?.paid, true);
-                      setFieldValue(
-                        formField.productos.name,
-                        res?.productos,
+                        formField.compatible_brand.name,
+                        res?.compatible_brand,
                         true
                       );
                     });
@@ -215,7 +182,7 @@ function NewOrden() {
                   <div className="h-full">
                     <div className="p-3">
                       <div>
-                        <AddOrden
+                        <AddProducto
                           formData={{
                             values,
                             touched,
@@ -228,9 +195,7 @@ function NewOrden() {
                         <div className="mt-2 w-full flex justify-between">
                           <button
                             onClick={(e) => {
-                              location.pathname.includes("/dashboard/ordenes")
-                                ? navigate(`/dashboard/ordenes`)
-                                : navigate(`/dashe/ordenes`);
+                              navigate("/dashboard/inventario");
                             }}
                             className="bg-primary text-white px-4 py-2 rounded-md"
                           >
@@ -256,4 +221,4 @@ function NewOrden() {
   );
 }
 
-export default NewOrden;
+export default NewProducto;

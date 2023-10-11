@@ -30,6 +30,13 @@ function AddPagoe({ formData }) {
     paid: paidV,
   } = values;
 
+  const handleValueChange = (value) => {
+    const isPaid = value === "Pagado";
+    setFieldValue(paid.name, isPaid);
+  };
+
+  const displayedValue = paidV ? "Pagado" : "No pagado";
+
   return (
     <div className="md:mt-4">
       <div className="md:mt-1.625">
@@ -123,22 +130,19 @@ function AddPagoe({ formData }) {
               select
               name={paid.name}
               label={paid.label}
-              value={paidV}
-              onValueChange={(value) => setFieldValue(paid.name, value, true)}
+              value={displayedValue}
+              onValueChange={handleValueChange}
               onBlur={handleBlur}
             >
               <SelectTrigger>
                 <SelectValue placeholder={"Seleccione"} />
               </SelectTrigger>
               <SelectContent>
-                {page.map((pageSize) => {
-                  console.log(pageSize);
-                  return (
-                    <SelectItem key={pageSize.value} value={pageSize.value}>
-                      {pageSize.label}
-                    </SelectItem>
-                  );
-                })}
+                {["Pagado", "No pagado"].map((pageSize) => (
+                  <SelectItem key={pageSize} value={pageSize}>
+                    {pageSize}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </FormField>
           </div>
@@ -147,23 +151,9 @@ function AddPagoe({ formData }) {
     </div>
   );
 }
-const page = [
-  { label: "Pagado", value: true },
-  { label: "No Pagado", value: false },
-];
+
 AddPagoe.propTypes = {
   formData: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
 };
 
 export default AddPagoe;
-
-{
-  /* <FormField
-              type={paid.type}
-              label={paid.label}
-              name={paid.name}
-              value={paidV}
-              placeholder={paid.placeholder}
-              onBlur={handleBlur}
-            /> */
-}

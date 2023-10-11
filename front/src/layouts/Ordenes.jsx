@@ -65,7 +65,7 @@ const Ordenes = () => {
             </Button>{" "}
             <Delete
               title={`Borrar ${row.name}`}
-              message="Esta seguro que desea eliminar esta orden"
+              message="¿Esta seguro que desea eliminar esta orden?"
               action={() => deleteOrden(row.id)}
             >
               <Button variant={"ghost"} size={"icon"}>
@@ -133,7 +133,7 @@ const Ordenes = () => {
             </Button>{" "}
             <Delete
               title={`Borrar ${row.name}`}
-              message="Esta seguro que desea eliminar esta venta"
+              message="¿Esta seguro que desea eliminar esta venta?"
               action={() => deleteOrden(row.id)}
             >
               <Button variant={"ghost"} size={"icon"}>

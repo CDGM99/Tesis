@@ -71,7 +71,7 @@ const PagoE = () => {
             </Button>{" "}
             <Delete
               title={`Borrar ${row.name}`}
-              message="Esta seguro que desea eliminar este embajador"
+              message="¿Esta seguro que desea eliminar este embajador?"
               action={() => deletePagoe(row.id)}
             >
               <Button variant={"ghost"} size={"icon"}>

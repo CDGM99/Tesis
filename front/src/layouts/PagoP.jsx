@@ -63,7 +63,7 @@ const PagoP = () => {
             </Button>{" "}
             <Delete
               title={`Borrar ${row.name}`}
-              message="Esta seguro que desea eliminar esta proveedor"
+              message="¿Esta seguro que desea eliminar esta proveedor?"
               action={() => deletePagop(row.id)}
             >
               <Button variant={"ghost"} size={"icon"}>

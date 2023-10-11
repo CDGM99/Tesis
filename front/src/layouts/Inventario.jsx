@@ -1,15 +1,17 @@
 import { Tabla } from "../components/Tabla";
 import { Button } from "../components/ui/button";
-import { Pen, Trash } from "lucide-react";
-
+import { Pen, PlusSquare, Trash } from "lucide-react";
 import React from "react";
-import Delete from "../components/Delete";
 import {
   useDeleteProductosMutation,
   useGetProductosQuery,
 } from "../services/InventarioServices";
+import { useNavigate } from "react-router-dom";
+import DeleteInventario from "../components/DeleteInventario";
 
 const Inventario = () => {
+  const navigate = useNavigate();
+
   const [
     deleteProductos,
     {
@@ -71,18 +73,23 @@ const Inventario = () => {
         id: "Opciones",
         accessorFn: (row) => (
           <div className="flex justify-center items-center gap-2">
-            <Button variant="ghost">
+            <Button
+              variant="ghost"
+              onClick={() => {
+                navigate(`/dashboard/inventario/edit/${row.id}`);
+              }}
+            >
               <Pen size={15} />
             </Button>{" "}
-            <Delete
+            <DeleteInventario
               title={`Borrar ${row.name}`}
-              message="Esta seguro que desea eliminar esta categoria"
+              message="¿Por que desea eliminar este producto del inventario?"
               action={() => deleteProductos(row.id)}
             >
               <Button variant={"ghost"} size={"icon"}>
                 <Trash size={15} />
               </Button>
-            </Delete>
+            </DeleteInventario>
           </div>
         ),
         cell: (info) => info.getValue(),
@@ -98,6 +105,14 @@ const Inventario = () => {
         <h1 className="text-center font-semibold text-[3rem] text-[#0280CA]">
           Inventario
         </h1>
+        <Button
+          variant="ghost"
+          onClick={() => {
+            navigate(`/dashboard/inventario/create`);
+          }}
+        >
+          <PlusSquare size={40} color="#0280CA" />
+        </Button>{" "}
       </div>
       <div className="flex">
         <Tabla data={dataProductos} />
