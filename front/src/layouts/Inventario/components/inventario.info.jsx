@@ -138,7 +138,7 @@ function AddProducto({ formData }) {
               </SelectTrigger>
               <SelectContent>
                 {almacenes?.map((el) => (
-                  <SelectItem key={el.name} value={el.name}>
+                  <SelectItem key={el.id} value={el.name}>
                     {el.name}
                   </SelectItem>
                 ))}
@@ -160,7 +160,7 @@ function AddProducto({ formData }) {
               </SelectTrigger>
               <SelectContent>
                 {proveedores?.map((el) => (
-                  <SelectItem key={el.name} value={el.name}>
+                  <SelectItem key={el.id} value={el.name}>
                     {el.name}
                   </SelectItem>
                 ))}

@@ -6,6 +6,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../components/ui/select";
+import { useGetPagoeQuery } from "../../../services/PagoEServices";
+import { useEffect, useState } from "react";
 
 function AddOrden({ formData }) {
   const { formField, values, handleBlur, setFieldValue } = formData;
@@ -58,6 +60,32 @@ function AddOrden({ formData }) {
     productos: productosV,
   } = values;
 
+  const { data: embajadores } = useGetPagoeQuery(undefined, {
+    refetchOnReconnect: true,
+  });
+
+  const [selected, setSelected] = useState(embajadorV);
+
+  useEffect(() => {
+    if (embajadores && embajadorV) {
+      const foundEmbajador = embajadores.find(
+        (almacen) => almacen.id === embajadorV
+      );
+      if (foundEmbajador) {
+        setSelected(foundEmbajador.name);
+      }
+    }
+  }, [embajadores, embajadorV]);
+
+  const handleEmbajador = (name) => {
+    const foundItem = embajadores.find((item) => item.name === name);
+
+    if (foundItem && foundItem.id !== undefined) {
+      setSelected(foundItem.name);
+      setFieldValue(almacen.name, foundItem.id, true);
+    }
+  };
+
   const handleValueChange = (value) => {
     const isPaid = value === "Pagado";
     setFieldValue(paid.name, isPaid);
@@ -70,13 +98,23 @@ function AddOrden({ formData }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="col-span-1 md:col-span-2">
             <FormField
-              type={embajador.type}
-              label={embajador.label}
+              select
               name={embajador.name}
-              value={embajadorV}
-              placeholder={embajador.placeholder}
-              onBlur={handleBlur}
-            />
+              label={embajador.label}
+              value={selected}
+              onValueChange={(name) => handleEmbajador(name)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder={"Seleccione"} />
+              </SelectTrigger>
+              <SelectContent>
+                {embajadores?.map((el) => (
+                  <SelectItem key={el.id} value={el.name}>
+                    {el.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </FormField>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

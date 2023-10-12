@@ -25,6 +25,7 @@ const Ordenes = () => {
   const { data } = useGetOrdenesQuery(undefined, {
     refetchOnReconnect: true,
   });
+
   const dataOrdenesAlmacen = {
     columns: [
       {
@@ -49,6 +50,13 @@ const Ordenes = () => {
         accessorFn: (row) => row.total,
         cell: (info) => info.getValue(),
         header: "Pago total",
+        footer: (props) => props.column.id,
+      },
+      {
+        id: "paid",
+        accessorFn: (row) => row.paid,
+        cell: (info) => (info.getValue() ? "Pagado" : "No Pagado"),
+        header: "Pagado",
         footer: (props) => props.column.id,
       },
       {
@@ -115,37 +123,37 @@ const Ordenes = () => {
         footer: (props) => props.column.id,
       },
 
-      {
-        id: "Opciones",
-        accessorFn: (row) => (
-          <div className="flex justify-center items-center gap-2">
-            <Button
-              variant="ghost"
-              onClick={() => {
-                {
-                  location.pathname === "/dashboard/ordenes"
-                    ? navigate(`/dashboard/ordenes/edit/${row.id}`)
-                    : navigate(`/dashe/ordenes/edit/${row.id}`);
-                }
-              }}
-            >
-              <Pen size={15} />
-            </Button>{" "}
-            <Delete
-              title={`Borrar ${row.name}`}
-              message="¿Esta seguro que desea eliminar esta venta?"
-              action={() => deleteOrden(row.id)}
-            >
-              <Button variant={"ghost"} size={"icon"}>
-                <Trash size={15} />
-              </Button>
-            </Delete>
-          </div>
-        ),
-        cell: (info) => info.getValue(),
-        header: "Opciones",
-        footer: (props) => props.column.id,
-      },
+      // {
+      //   id: "Opciones",
+      //   accessorFn: (row) => (
+      //     <div className="flex justify-center items-center gap-2">
+      //       <Button
+      //         variant="ghost"
+      //         onClick={() => {
+      //           {
+      //             location.pathname === "/dashboard/ordenes"
+      //               ? navigate(`/dashboard/ordenes/edit/${row.id}`)
+      //               : navigate(`/dashe/ordenes/edit/${row.id}`);
+      //           }
+      //         }}
+      //       >
+      //         <Pen size={15} />
+      //       </Button>{" "}
+      //       <Delete
+      //         title={`Borrar ${row.name}`}
+      //         message="¿Esta seguro que desea eliminar esta venta?"
+      //         action={() => deleteOrden(row.id)}
+      //       >
+      //         <Button variant={"ghost"} size={"icon"}>
+      //           <Trash size={15} />
+      //         </Button>
+      //       </Delete>
+      //     </div>
+      //   ),
+      //   cell: (info) => info.getValue(),
+      //   header: "Opciones",
+      //   footer: (props) => props.column.id,
+      // },
     ],
     rows: data ?? [],
   };
@@ -154,7 +162,7 @@ const Ordenes = () => {
       <div>
         {location.pathname === "/dashboard/ordenes" ? (
           <h1 className="text-center font-semibold text-[3rem] text-[#0280CA]">
-            Ordenes
+            Pre despacho
           </h1>
         ) : (
           <h1 className="text-center font-semibold text-[3rem] text-[#0280CA]">

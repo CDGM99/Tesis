@@ -24,6 +24,7 @@ export const store = configureStore({
       ordenesApi.middleware,
       pagoeApi.middleware,
       pagopApi.middleware,
+      facturasiApi.middleware,
       salidaseApi.middleware,
     ]),
 });

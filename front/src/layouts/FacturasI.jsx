@@ -71,14 +71,14 @@ const Facturasi = () => {
         id: "Opciones",
         accessorFn: (row) => (
           <div className="flex justify-center items-center gap-2">
-            <Button
+            {/* <Button
               variant="ghost"
               onClick={() => {
                 navigate(`/dashe/facturasi/edit/${row.id}`);
               }}
             >
               <Pen size={15} />
-            </Button>{" "}
+            </Button>{" "} */}
             <Delete
               title={`Borrar ${row.name}`}
               message="¿Esta seguro que desea eliminar esta factura interna?"

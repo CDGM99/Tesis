@@ -1,6 +1,6 @@
 import { Tabla } from "../components/Tabla";
 import { Button } from "../components/ui/button";
-import { Pen, PlusSquare, Trash } from "lucide-react";
+import { GanttChartSquare, Pen, PlusSquare, Trash } from "lucide-react";
 import React from "react";
 import {
   useDeleteProductosMutation,
@@ -8,6 +8,7 @@ import {
 } from "../services/InventarioServices";
 import { useNavigate } from "react-router-dom";
 import DeleteInventario from "../components/DeleteInventario";
+import Details from "../components/Details";
 
 const Inventario = () => {
   const navigate = useNavigate();
@@ -81,9 +82,19 @@ const Inventario = () => {
             >
               <Pen size={15} />
             </Button>{" "}
+            <Details
+              title={`Información del producto ${row.name}`}
+              message="Aqui se mostrará la informacion detallada del producto"
+              id={row.id}
+            >
+              <Button variant="ghost">
+                <GanttChartSquare size={15} />
+              </Button>
+            </Details>
             <DeleteInventario
               title={`Borrar ${row.name}`}
               message="¿Por que desea eliminar este producto del inventario?"
+              id={row.id}
               action={() => deleteProductos(row.id)}
             >
               <Button variant={"ghost"} size={"icon"}>

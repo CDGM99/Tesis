@@ -23,7 +23,7 @@ const Dashboard = () => {
                 { name: "Inicio", url: "/dashboard" },
                 { name: "Almacenes", url: "/dashboard/almacenes" },
                 { name: "Inventario", url: "/dashboard/inventario" },
-                { name: "Ordenes", url: "/dashboard/ordenes" },
+                { name: "Pre despacho", url: "/dashboard/ordenes" },
                 { name: "Salidas Especiales", url: "/dashboard/salidase" },
                 { name: "Salir", url: "/" },
               ]}

@@ -28,10 +28,31 @@ const Salidase = () => {
   const dataSalidase = {
     columns: [
       {
-        id: "producto",
+        id: "productoname",
         accessorFn: (row) => row.producto.name,
         cell: (info) => info.getValue(),
         header: "Nombre del producto",
+        footer: (props) => props.column.id,
+      },
+      {
+        id: "productosku",
+        accessorFn: (row) => row.producto.sku,
+        cell: (info) => info.getValue(),
+        header: "SKU",
+        footer: (props) => props.column.id,
+      },
+      {
+        id: "productocost",
+        accessorFn: (row) => row.producto.cost,
+        cell: (info) => info.getValue(),
+        header: "Costo",
+        footer: (props) => props.column.id,
+      },
+      {
+        id: "productoproduct_id",
+        accessorFn: (row) => row.producto.product_id,
+        cell: (info) => info.getValue(),
+        header: "ID",
         footer: (props) => props.column.id,
       },
       {
