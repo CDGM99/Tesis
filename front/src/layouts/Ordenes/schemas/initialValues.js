@@ -49,7 +49,7 @@ const initialValues = {
   [payment_method.name]: "",
   [date_paid.name]: "",
   [paid.name]: "",
-  [productos.name]: "",
+  [productos.name]: [],
 };
 
 export default initialValues;

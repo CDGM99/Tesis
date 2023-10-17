@@ -8,6 +8,8 @@ import {
 } from "../../../components/ui/select";
 import { useGetPagoeQuery } from "../../../services/PagoEServices";
 import { useEffect, useState } from "react";
+import TransferList from "../../../components/Transferlist";
+import { useGetProductosFiltersQuery } from "../../../services/InventarioServices";
 
 function AddOrden({ formData }) {
   const { formField, values, handleBlur, setFieldValue } = formData;
@@ -63,14 +65,15 @@ function AddOrden({ formData }) {
   const { data: embajadores } = useGetPagoeQuery(undefined, {
     refetchOnReconnect: true,
   });
+  const { data: productos_query } = useGetProductosFiltersQuery(undefined, {
+    refetchOnReconnect: true,
+  });
 
   const [selected, setSelected] = useState(embajadorV);
 
   useEffect(() => {
     if (embajadores && embajadorV) {
-      const foundEmbajador = embajadores.find(
-        (almacen) => almacen.id === embajadorV
-      );
+      const foundEmbajador = embajadores.find((emb) => emb.id === embajadorV);
       if (foundEmbajador) {
         setSelected(foundEmbajador.name);
       }
@@ -82,7 +85,7 @@ function AddOrden({ formData }) {
 
     if (foundItem && foundItem.id !== undefined) {
       setSelected(foundItem.name);
-      setFieldValue(almacen.name, foundItem.id, true);
+      setFieldValue(embajador.name, foundItem.id, true);
     }
   };
 
@@ -369,18 +372,12 @@ function AddOrden({ formData }) {
             </FormField>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="col-span-1">
-            <FormField
-              type={productos.type}
-              label={productos.label}
-              name={productos.name}
-              value={productosV}
-              placeholder={productos.placeholder}
-              onBlur={handleBlur}
-            />
-          </div>
-        </div>
+        <TransferList
+          title={productos.label}
+          initialLeft={productos_query}
+          initialRight={productosV}
+          onChange={(data) => setFieldValue(productos.name, data)}
+        />
       </div>
     </div>
   );

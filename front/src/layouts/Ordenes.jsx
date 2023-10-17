@@ -169,18 +169,22 @@ const Ordenes = () => {
             Ventas
           </h1>
         )}
-        <Button
-          variant="ghost"
-          onClick={() => {
-            {
-              location.pathname === "/dashboard/ordenes"
-                ? navigate(`/dashboard/ordenes/create`)
-                : navigate(`/dashe/ordenes/create`);
-            }
-          }}
-        >
-          <PlusSquare size={40} color="#0280CA" />
-        </Button>{" "}
+        {location.pathname === "/dashboard/ordenes" ? (
+          <Button
+            variant="ghost"
+            onClick={() => {
+              {
+                location.pathname === "/dashboard/ordenes"
+                  ? navigate(`/dashboard/ordenes/create`)
+                  : navigate(`/dashe/ordenes/create`);
+              }
+            }}
+          >
+            <PlusSquare size={40} color="#0280CA" />
+          </Button>
+        ) : (
+          ""
+        )}
       </div>
       <div className="flex">
         {location.pathname === "/dashboard/ordenes" ? (

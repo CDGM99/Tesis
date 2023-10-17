@@ -21,14 +21,6 @@ const {
     stock_quantity,
     cost,
     product_id,
-    weigth,
-    format,
-    volume,
-    caducity_date,
-    production_date,
-    amp,
-    volt,
-    compatible_brand,
   },
 } = checkout;
 
@@ -52,14 +44,6 @@ const initialValues = {
   [stock_quantity.name]: "",
   [cost.name]: "",
   [product_id.name]: "",
-  [weigth.name]: "",
-  [format.name]: "",
-  [volume.name]: "",
-  [caducity_date.name]: "",
-  [production_date.name]: "",
-  [amp.name]: "",
-  [volt.name]: "",
-  [compatible_brand.name]: "",
 };
 
 export default initialValues;

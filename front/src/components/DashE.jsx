@@ -21,6 +21,7 @@ const DashE = () => {
             <Navbar
               links={[
                 { name: "Inicio", url: "/dashe" },
+                { name: "Graficas de ventas", url: "/dashe/barchart" },
                 { name: "Ventas", url: "/dashe/ordenes" },
                 { name: "Pago Embajadores", url: "/dashe/pagoe" },
                 { name: "Pago Proveedores", url: "/dashe/pagop" },

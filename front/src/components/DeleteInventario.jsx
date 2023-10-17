@@ -25,20 +25,20 @@ export default function DeleteInventario({
   children,
   id,
 }) {
-  const [getProductoById, { data: producto }] = useLazyGetProductosByIdQuery();
-
-  // const execute = useCallback(() => {
-  //   if (action) action();
-  // }, []);
+  const execute = useCallback((data) => {
+    if (action) action(data);
+  }, []);
 
   const submitForm = async (values, actions) => {
-    if (selectedValue === "salida especial") {
-      const { description } = values;
-      const productoAMover = { ...producto, description };
-      console.log(productoAMover);
-      console.log("sss", producto);
+    if (selectedValue === "salida_interna" || selectedValue === "merma") {
+      const { output_description } = values;
+      execute({
+        id,
+        tipo: selectedValue,
+        descripcion: output_description,
+      });
     } else {
-      action();
+      execute({ id });
     }
   };
 
@@ -47,17 +47,7 @@ export default function DeleteInventario({
   const handleRadioChange = (event) => {
     setSelectedValue(event.target.value);
   };
-  console.log("id", id);
 
-  useEffect(() => {
-    if (id) {
-      getProductoById(id)
-        .unwrap()
-        .then((res) => {
-          // console.log("sasas", res);
-        });
-    }
-  }, [id]);
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
@@ -73,56 +63,61 @@ export default function DeleteInventario({
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem
-              value="salida especial"
+              value="salida_interna"
               id="r2"
               onClick={handleRadioChange}
             />
-            <Label htmlFor="r2">Salida Especial</Label>
+            <Label htmlFor="r2">Salida Interna</Label>
           </div>
-          {/* <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2">
             <RadioGroupItem value="merma" id="r3" onClick={handleRadioChange} />
             <Label htmlFor="r3">Merma</Label>
-          </div> */}
+          </div>
         </RadioGroup>
-        {/* {selectedValue === "merma" ? <h1>merma</h1> : ""} */}
-        {selectedValue === "salida especial" ? (
+
+        {selectedValue === "salida_interna" || selectedValue === "merma" ? (
           <Formik
-            initialValues={{ description: "" }}
+            initialValues={{ output_description: "" }}
             validationSchema={Yup.object().shape({
-              description: Yup.string().required("La descripción es requerida"),
+              output_description: Yup.string().required(
+                "La descripción es requerida"
+              ),
             })}
-            onSubmit={(values, { resetForm }) => {
-              // Aquí puedes manejar la lógica de envío del formulario
-              console.log("Valores del formulario:", values);
-              // Limpia el formulario después de enviarlo
-              resetForm();
-            }}
+            onSubmit={submitForm}
           >
-            {({ values, handleChange, handleBlur, handleSubmit }) => (
+            {({ values, handleChange, handleBlur, isValid }) => (
               <Form>
                 <div>
                   <FormField
                     type={"text"}
                     label={"Describa el motivo de la salida del producto"}
-                    name={"description"}
-                    value={values.description}
+                    name={"output_description"}
+                    value={values.output_description}
                     placeholder={"Descripción"}
+                    onChange={handleChange}
                     onBlur={handleBlur}
                   />
                 </div>
+
+                <AlertDialogFooter>
+                  <AlertDialogCancel onClick={() => setSelectedValue("")}>
+                    Cancelar
+                  </AlertDialogCancel>
+                  <AlertDialogAction disabled={!isValid} type="submit">
+                    Aceptar
+                  </AlertDialogAction>
+                </AlertDialogFooter>
               </Form>
             )}
           </Formik>
         ) : (
-          ""
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setSelectedValue("")}>
+              Cancelar
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={submitForm}>Aceptar</AlertDialogAction>
+          </AlertDialogFooter>
         )}
-
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setSelectedValue("")}>
-            Cancelar
-          </AlertDialogCancel>
-          <AlertDialogAction onClick={submitForm}>Aceptar</AlertDialogAction>
-        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );

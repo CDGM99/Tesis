@@ -47,21 +47,27 @@ function NewOrden() {
 
   const [getOrdenById, { data: orden }] = useLazyGetOrdenesByIdQuery();
   const submitForm = async (values, actions) => {
+    const { productos, ...rest } = values;
     try {
       if (!id) {
-        await createOrden(values);
+        await createOrden({ ...rest, productos: productos.map((el) => el.id) });
       } else {
         const modifiedFields = getModifiedFields(oldValues, values);
+        const { productos, ...rest } = modifiedFields;
         if (Object.keys(modifiedFields).length !== 0) {
-          await editOrden({ id: id, ...modifiedFields });
+          await editOrden({
+            id: id,
+            ...rest,
+            productos: productos.map((el) => el.id),
+          });
         }
       }
-      location.pathname.includes("/dashboard/ordenes")
-        ? navigate(`/dashboard/ordenes`)
-        : navigate(`/dashe/ordenes`);
       if (isSuccessC || isSuccessE) {
         actions.setSubmitting(false);
         actions.resetForm();
+        location.pathname.includes("/dashboard/ordenes")
+          ? navigate(`/dashboard/ordenes`)
+          : navigate(`/dashe/ordenes`);
       }
     } catch (error) {
       console.error(error);

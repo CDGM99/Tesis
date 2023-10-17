@@ -10,6 +10,7 @@ import {
   useLazyGetProductosByIdQuery,
 } from "../../services/InventarioServices";
 import AddProducto from "./components/inventario.info";
+import { useCreateSendEmailMutation } from "../../services/send.email";
 
 const getModifiedFields = (originalData, newData) => {
   return Object.fromEntries(
@@ -30,6 +31,15 @@ function NewProducto() {
     },
   ] = useCreateProductosMutation();
   const [
+    SendEmail,
+    {
+      isSuccess: isSuccess,
+      isLoading: isLoading,
+      isError: isError,
+      error: error,
+    },
+  ] = useCreateSendEmailMutation();
+  const [
     editProducto,
     {
       isSuccess: isSuccessE,
@@ -46,10 +56,13 @@ function NewProducto() {
   const navigate = useNavigate();
 
   const [getProductoById, { data: producto }] = useLazyGetProductosByIdQuery();
+
   const submitForm = async (values, actions) => {
     try {
       if (!id) {
-        await createProducto(values);
+        await createProducto(values).then((res) => {
+          SendEmail({ correo: "ztazhorde@gmail.com" });
+        });
       } else {
         const modifiedFields = getModifiedFields(oldValues, values);
         if (Object.keys(modifiedFields).length !== 0) {
@@ -96,16 +109,15 @@ function NewProducto() {
                   getProductoById(id)
                     .unwrap()
                     .then((res) => {
-                      console.log(res);
                       setOldValues(res);
                       setFieldValue(
                         formField.almacen.name,
-                        res?.almacen.name,
+                        res?.almacen.id,
                         true
                       );
                       setFieldValue(
                         formField.proveedor.name,
-                        res?.proveedor.name,
+                        res?.proveedor.id,
                         true
                       );
                       setFieldValue(formField.name.name, res?.name, true);
@@ -153,26 +165,6 @@ function NewProducto() {
                         res?.product_id,
                         true
                       );
-                      setFieldValue(formField.weigth.name, res?.weigth, true);
-                      setFieldValue(formField.format.name, res?.format, true);
-                      setFieldValue(formField.volume.name, res?.volume, true);
-                      setFieldValue(
-                        formField.caducity_date.name,
-                        res?.caducity_date,
-                        true
-                      );
-                      setFieldValue(
-                        formField.production_date.name,
-                        res?.production_date,
-                        true
-                      );
-                      setFieldValue(formField.amp.name, res?.amp, true);
-                      setFieldValue(formField.volt.name, res?.volt, true);
-                      setFieldValue(
-                        formField.compatible_brand.name,
-                        res?.compatible_brand,
-                        true
-                      );
                     });
                 }
               }, [id]);
@@ -183,6 +175,7 @@ function NewProducto() {
                     <div className="p-3">
                       <div>
                         <AddProducto
+                          old={id}
                           formData={{
                             values,
                             touched,

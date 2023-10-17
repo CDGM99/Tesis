@@ -53,7 +53,6 @@ const validations = [
     [payment_method.name]: Yup.string().required(payment_method.errorMsg),
     [date_paid.name]: Yup.string().required(date_paid.errorMsg),
     [paid.name]: Yup.string().required(paid.errorMsg),
-    [productos.name]: Yup.string().required(productos.errorMsg),
   }),
 ];
 

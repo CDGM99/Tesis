@@ -22,6 +22,22 @@ export const productosApi = createApi({
             ]
           : [{ type: "Productos", id: "LIST" }],
     }),
+    getProductosFilters: builder.query({
+      query: () => ({
+        url: "/productos/?cantidad_min=1",
+        method: "GET",
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({
+                type: "ProductosFiltrados",
+                id,
+              })),
+              { type: "ProductosFiltrados", id: "LIST" },
+            ]
+          : [{ type: "ProductosFiltrados", id: "LIST" }],
+    }),
 
     getProductosById: builder.query({
       query: (id) => ({
@@ -54,6 +70,7 @@ export const productosApi = createApi({
         method: "PATCH",
         body,
       }),
+
       invalidatesTags: (result, error, { id }) =>
         result
           ? [
@@ -62,14 +79,25 @@ export const productosApi = createApi({
             ]
           : [{ type: "Productos", id: "LIST" }],
     }),
+
+    deleteTocho: builder.mutation({
+      query: ({ id, ...rest }) => ({
+        url: `/producto/delete/${id}/`,
+        method: "POST",
+        body: rest ?? {},
+      }),
+      invalidatesTags: [{ type: "Productos", id: "LIST" }],
+    }),
   }),
 });
 
 export const {
+  useGetProductosFiltersQuery,
   useCreateProductosMutation,
   useDeleteProductosMutation,
   useEditProductosMutation,
   useGetProductosByIdQuery,
   useGetProductosQuery,
   useLazyGetProductosByIdQuery,
+  useDeleteTochoMutation,
 } = productosApi;

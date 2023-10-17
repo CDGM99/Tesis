@@ -115,54 +115,6 @@ const form = {
       type: "number",
       errorMsg: "El ID del producto es requerido.",
     },
-    weigth: {
-      name: "weigth",
-      label: "Peso",
-      type: "number",
-      errorMsg: "El peso es requerido.",
-    },
-    format: {
-      name: "format",
-      label: "Formato",
-      type: "text",
-      errorMsg: "El formato es requerido.",
-    },
-    volume: {
-      name: "volume",
-      label: "Volumen",
-      type: "text",
-      errorMsg: "El volumen es requerido.",
-    },
-    caducity_date: {
-      name: "caducity_date",
-      label: "Fecha de caducidad",
-      type: "date",
-      errorMsg: "La fecha de caducidad es requerida.",
-    },
-    production_date: {
-      name: "production_date",
-      label: "Fecha de produccción",
-      type: "date",
-      errorMsg: "La Fecha de produccción es requerida.",
-    },
-    amp: {
-      name: "amp",
-      label: "Amperios",
-      type: "text",
-      errorMsg: "Los amperios son requeridos.",
-    },
-    volt: {
-      name: "volt",
-      label: "Voltios",
-      type: "text",
-      errorMsg: "Los voltios son requeridos.",
-    },
-    compatible_brand: {
-      name: "compatible_brand",
-      label: "Marca compatible",
-      type: "text",
-      errorMsg: "La marca compatible es requerida.",
-    },
   },
 };
 

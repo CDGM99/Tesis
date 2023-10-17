@@ -9,18 +9,6 @@ import {
   useGetSalidaseQuery,
 } from "../services/SalidaseServices";
 const Salidase = () => {
-  // const navigate = useNavigate();
-
-  // const [
-  //   deleteSalidase,
-  //   {
-  //     isError: isErrorD,
-  //     isLoading: isLoadingD,
-  //     isSuccess: isSuccessD,
-  //     error: errorD,
-  //   },
-  // ] = useDeleteSalidaseMutation();
-
   const { data } = useGetSalidaseQuery(undefined, {
     refetchOnReconnect: true,
   });
@@ -32,6 +20,20 @@ const Salidase = () => {
         accessorFn: (row) => row.producto.name,
         cell: (info) => info.getValue(),
         header: "Nombre del producto",
+        footer: (props) => props.column.id,
+      },
+      {
+        id: "output_description",
+        accessorFn: (row) => row.output_description,
+        cell: (info) => info.getValue(),
+        header: "Descripción",
+        footer: (props) => props.column.id,
+      },
+      {
+        id: "output_type",
+        accessorFn: (row) => row.output_type,
+        cell: (info) => info.getValue(),
+        header: "Tipo de salida",
         footer: (props) => props.column.id,
       },
       {
@@ -55,41 +57,6 @@ const Salidase = () => {
         header: "ID",
         footer: (props) => props.column.id,
       },
-      {
-        id: "description",
-        accessorFn: (row) => row.description,
-        cell: (info) => info.getValue(),
-        header: "Descripción",
-        footer: (props) => props.column.id,
-      },
-
-      // {
-      //   id: "Opciones",
-      //   accessorFn: (row) => (
-      //     <div className="flex justify-center items-center gap-2">
-      //       <Button
-      //         variant="ghost"
-      //         onClick={() => {
-      //           navigate(`/dashboard/almacenes/edit/${row.id}`);
-      //         }}
-      //       >
-      //         <Pen size={15} />
-      //       </Button>{" "}
-      //       <Delete
-      //         title={`Borrar ${row.name}`}
-      //         message="Esta seguro que desea eliminar este almacén"
-      //         action={() => deleteSalidase(row.id)}
-      //       >
-      //         <Button variant={"ghost"} size={"icon"}>
-      //           <Trash size={15} />
-      //         </Button>
-      //       </Delete>
-      //     </div>
-      //   ),
-      //   cell: (info) => info.getValue(),
-      //   header: "Opciones",
-      //   footer: (props) => props.column.id,
-      // },
     ],
     rows: data ?? [],
   };
@@ -99,14 +66,6 @@ const Salidase = () => {
         <h1 className="text-center font-semibold text-[3rem] text-[#0280CA]">
           Salidas especiales
         </h1>
-        {/* <Button
-          variant="ghost"
-          onClick={() => {
-            navigate(`/dashboard/almacenes/create`);
-          }}
-        >
-          <PlusSquare size={40} color="#0280CA" />
-        </Button>{" "} */}
       </div>
       <div className="flex">
         <Tabla data={dataSalidase} />

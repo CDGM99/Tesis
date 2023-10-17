@@ -16,6 +16,7 @@ import NewPagop from "./layouts/PagoP/new.pagop";
 import NewPagoe from "./layouts/PagoE/new.pagoe";
 import NewOrden from "./layouts/Ordenes/new.orden";
 import NewProducto from "./layouts/Inventario/new.inventario";
+import { BarChart } from "./components/BarChart";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="facturasi" element={<Facturasi />}></Route>
         <Route path="facturasi/create" element={<NewFacturasi />}></Route>
         <Route path="facturasi/edit/:id" element={<NewFacturasi />}></Route>
+        <Route path="barchart" element={<BarChart />}></Route>
       </Route>
 
       <Route path="/dashboard" element={<Dashboard />}>

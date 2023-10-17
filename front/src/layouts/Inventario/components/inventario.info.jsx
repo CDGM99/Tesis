@@ -9,8 +9,9 @@ import {
   SelectValue,
 } from "../../../components/ui/select";
 import { useGetPagopQuery } from "../../../services/PagoPServices";
+import { useGetProductosByIdQuery } from "../../../services/InventarioServices";
 
-function AddProducto({ formData }) {
+function AddProducto({ formData, old }) {
   const { formField, values, handleBlur, setFieldValue } = formData;
   const {
     almacen,
@@ -32,14 +33,6 @@ function AddProducto({ formData }) {
     stock_quantity,
     cost,
     product_id,
-    weigth,
-    format,
-    volume,
-    caducity_date,
-    production_date,
-    amp,
-    volt,
-    compatible_brand,
   } = formField;
   const {
     almacen: almacenV,
@@ -61,46 +54,54 @@ function AddProducto({ formData }) {
     stock_quantity: stock_quantityV,
     cost: costV,
     product_id: product_idV,
-    weigth: weigthV,
-    format: formatV,
-    volume: volumeV,
-    caducity_date: caducity_dateV,
-    production_date: production_dateV,
-    amp: ampV,
-    volt: voltV,
-    compatible_brand: compatible_brandV,
   } = values;
-  console.log(almacenV, proveedorV);
 
-  const { data: almacenes } = useGetAlmacenesQuery(undefined, {
+  const {
+    data: almacenes,
+    isSuccess: isSuccessGA,
+    isLoading: isLoadingGA,
+  } = useGetAlmacenesQuery(undefined, {
     refetchOnReconnect: true,
   });
 
-  const { data: proveedores } = useGetPagopQuery(undefined, {
+  const {
+    data: proveedores,
+    isSuccess: isSuccessGP,
+    isLoading: isLoadingGP,
+  } = useGetPagopQuery(undefined, {
     refetchOnReconnect: true,
   });
-  const [selected, setSelected] = useState(almacenV);
-  const [selectedP, setSelectedP] = useState(proveedorV);
+
+  const {
+    data: producto,
+    isSuccess: isSuccessGPI,
+    isLoading: isLoadingGPI,
+  } = useGetProductosByIdQuery(old);
+
+  const [selected, setSelected] = useState("");
+  const [selectedP, setSelectedP] = useState("");
 
   useEffect(() => {
-    if (almacenes && almacenV) {
-      const foundAlmacen = almacenes.find((almacen) => almacen.id === almacenV);
-      if (foundAlmacen) {
-        setSelected(foundAlmacen.name);
+    if (isSuccessGPI) {
+      if (isSuccessGA && almacenV) {
+        const foundAlmacen = almacenes.find(
+          (almacen) => almacen.id === producto?.almacen.id
+        );
+        if (foundAlmacen) {
+          setSelected(foundAlmacen.name);
+        }
       }
-    }
-  }, [almacenes, almacenV]);
 
-  useEffect(() => {
-    if (proveedores && proveedorV) {
-      const foundProveedor = proveedores.find(
-        (proveedor) => proveedor.id === proveedorV
-      );
-      if (foundProveedor) {
-        setSelectedP(foundProveedor.name);
+      if (isSuccessGP && proveedorV) {
+        const foundProveedor = proveedores.find(
+          (proveedor) => proveedor.id === producto?.proveedor.id
+        );
+        if (foundProveedor) {
+          setSelectedP(foundProveedor.name);
+        }
       }
     }
-  }, [proveedores, proveedorV]);
+  }, [isLoadingGA, isLoadingGP, isLoadingGPI]);
 
   const handleAlmacen = (name) => {
     const foundItem = almacenes.find((item) => item.name === name);
@@ -116,9 +117,7 @@ function AddProducto({ formData }) {
 
     if (foundItem && foundItem.id !== undefined) {
       setSelectedP(foundItem.name);
-      console.log("pp", foundItem);
       setFieldValue(proveedor.name, foundItem.id, true);
-      console.log("kk", selectedP);
     }
   };
   return (
@@ -131,7 +130,7 @@ function AddProducto({ formData }) {
               name={almacen.name}
               label={almacen.label}
               value={selected}
-              onValueChange={(name) => handleAlmacen(name)}
+              onValueChange={(value) => handleAlmacen(value)}
             >
               <SelectTrigger>
                 <SelectValue placeholder={"Seleccione"} />
@@ -368,102 +367,6 @@ function AddProducto({ formData }) {
               name={product_id.name}
               value={product_idV}
               placeholder={product_id.placeholder}
-              onBlur={handleBlur}
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="col-span-1">
-            <FormField
-              type={weigth.type}
-              label={weigth.label}
-              name={weigth.name}
-              value={weigthV}
-              placeholder={weigth.placeholder}
-              onBlur={handleBlur}
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="col-span-1">
-            <FormField
-              type={format.type}
-              label={format.label}
-              name={format.name}
-              value={formatV}
-              placeholder={format.placeholder}
-              onBlur={handleBlur}
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="col-span-1">
-            <FormField
-              type={volume.type}
-              label={volume.label}
-              name={volume.name}
-              value={volumeV}
-              placeholder={volume.placeholder}
-              onBlur={handleBlur}
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="col-span-1">
-            <FormField
-              type={caducity_date.type}
-              label={caducity_date.label}
-              name={caducity_date.name}
-              value={caducity_dateV}
-              placeholder={caducity_date.placeholder}
-              onBlur={handleBlur}
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="col-span-1">
-            <FormField
-              type={production_date.type}
-              label={production_date.label}
-              name={production_date.name}
-              value={production_dateV}
-              placeholder={production_date.placeholder}
-              onBlur={handleBlur}
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="col-span-1">
-            <FormField
-              type={amp.type}
-              label={amp.label}
-              name={amp.name}
-              value={ampV}
-              placeholder={amp.placeholder}
-              onBlur={handleBlur}
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="col-span-1">
-            <FormField
-              type={volt.type}
-              label={volt.label}
-              name={volt.name}
-              value={voltV}
-              placeholder={volt.placeholder}
-              onBlur={handleBlur}
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="col-span-1">
-            <FormField
-              type={compatible_brand.type}
-              label={compatible_brand.label}
-              name={compatible_brand.name}
-              value={compatible_brandV}
-              placeholder={compatible_brand.placeholder}
               onBlur={handleBlur}
             />
           </div>

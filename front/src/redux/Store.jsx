@@ -6,6 +6,7 @@ import { pagoeApi } from "../services/PagoEServices";
 import { pagopApi } from "../services/PagoPServices";
 import { facturasiApi } from "../services/FacturasIServices";
 import { salidaseApi } from "../services/SalidaseServices";
+import { sendEmailApi } from "../services/send.email";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     [pagopApi.reducerPath]: pagopApi.reducer,
     [facturasiApi.reducerPath]: facturasiApi.reducer,
     [salidaseApi.reducerPath]: salidaseApi.reducer,
+    [sendEmailApi.reducerPath]: sendEmailApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({}).concat([
@@ -26,6 +28,7 @@ export const store = configureStore({
       pagopApi.middleware,
       facturasiApi.middleware,
       salidaseApi.middleware,
+      sendEmailApi.middleware,
     ]),
 });
 

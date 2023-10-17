@@ -4,6 +4,7 @@ import { GanttChartSquare, Pen, PlusSquare, Trash } from "lucide-react";
 import React from "react";
 import {
   useDeleteProductosMutation,
+  useDeleteTochoMutation,
   useGetProductosQuery,
 } from "../services/InventarioServices";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +22,7 @@ const Inventario = () => {
       isSuccess: isSuccessD,
       error: errorD,
     },
-  ] = useDeleteProductosMutation();
+  ] = useDeleteTochoMutation();
 
   const { data } = useGetProductosQuery(undefined, {
     refetchOnReconnect: true,
@@ -95,7 +96,7 @@ const Inventario = () => {
               title={`Borrar ${row.name}`}
               message="¿Por que desea eliminar este producto del inventario?"
               id={row.id}
-              action={() => deleteProductos(row.id)}
+              action={(data) => deleteProductos(data)}
             >
               <Button variant={"ghost"} size={"icon"}>
                 <Trash size={15} />
