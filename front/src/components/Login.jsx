@@ -22,12 +22,10 @@ const Login = () => {
 
   const handleSubmit = async (values) => {
     login(values).then((resp) => {
-      console.log(resp);
       if (resp.data.user) {
         getUsuarioById(
           resp.data.user.pk + "?timestamp=" + new Date().getTime()
         ).then((res) => {
-          console.log("resdata", res.data);
           sessionStorage.setItem("user", JSON.stringify(res.data));
           if (res.data && res.data.groups) {
             switch (res.data.groups[0]) {
@@ -89,7 +87,7 @@ const Login = () => {
               htmlFor="email"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
-              Correo electronico
+              Correo electrónico
             </label>
             <div className="mt-2">
               <input
@@ -147,6 +145,19 @@ const Login = () => {
             >
               Entrar
             </button>
+            {errorD &&
+              Object.values(errorD.data)
+                .flat()
+                .map((errorMsg, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="w-full text-center mt-3 mb-3 text-red-600"
+                    >
+                      <p>Usuario o contraseña incorrectos</p>
+                    </div>
+                  );
+                })}
           </div>
         </form>
       </div>

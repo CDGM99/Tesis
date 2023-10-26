@@ -39,7 +39,7 @@ const Almacenes = () => {
         id: "geolocalizacion",
         accessorFn: (row) => row.geolocalizacion,
         cell: (info) => info.getValue(),
-        header: "Geolocalizacion",
+        header: "Geolocalización",
         footer: (props) => props.column.id,
       },
 

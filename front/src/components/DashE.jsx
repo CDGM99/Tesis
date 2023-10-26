@@ -23,8 +23,8 @@ const DashE = () => {
                 { name: "Inicio", url: "/dashe" },
                 { name: "Ventas", url: "/dashe/ordenes" },
                 { name: "Gráfica de ventas", url: "/dashe/tablamensual" },
-                { name: "Pago Embajadores", url: "/dashe/pagoe" },
-                { name: "Pago Proveedores", url: "/dashe/pagop" },
+                { name: "Pago a embajadores", url: "/dashe/pagoe" },
+                { name: "Pago a proveedores", url: "/dashe/pagop" },
                 { name: "Facturas Internas", url: "/dashe/facturasi" },
                 { name: "Salir", url: "/" },
               ]}

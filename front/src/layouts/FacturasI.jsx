@@ -29,10 +29,10 @@ const Facturasi = () => {
   const dataFacturasi = {
     columns: [
       {
-        id: "productos",
+        id: "producto",
         accessorFn: (row) =>
-          Array.isArray(row.productos)
-            ? row.productos.map((producto) => producto.name).join(", ")
+          Array.isArray(row.producto)
+            ? row.producto.map((producto) => producto.name).join(", ")
             : "",
         cell: (info) => info.getValue(),
         header: "Productos",
@@ -80,9 +80,9 @@ const Facturasi = () => {
               <Pen size={15} />
             </Button>{" "} */}
             <Delete
-              title={`Borrar ${row.name}`}
+              title={`Borrar ${row.description}`}
               message="¿Esta seguro que desea eliminar esta factura interna?"
-              action={() => deleteFacturasi(row.id)}
+              action={() => deleteOrden(row.id)}
             >
               <Button variant={"ghost"} size={"icon"}>
                 <Trash size={15} />

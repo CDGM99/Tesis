@@ -32,7 +32,7 @@ const Ordenes = () => {
         id: "number",
         accessorFn: (row) => row.number,
         cell: (info) => info.getValue(),
-        header: "Numero de la orden",
+        header: "Número de la orden",
         footer: (props) => props.column.id,
       },
       {
@@ -95,7 +95,7 @@ const Ordenes = () => {
         id: "number",
         accessorFn: (row) => row.number,
         cell: (info) => info.getValue(),
-        header: "Numero de la orden",
+        header: "Número de la orden",
         footer: (props) => props.column.id,
       },
       {
