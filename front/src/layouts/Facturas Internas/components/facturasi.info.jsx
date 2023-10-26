@@ -7,7 +7,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../components/ui/select";
-import { useGetProductosQuery } from "../../../services/InventarioServices";
+import {
+  useGetProductosFiltersQuery,
+  useGetProductosQuery,
+} from "../../../services/InventarioServices";
+import TransferList from "../../../components/Transferlist";
 
 function AddFacturasi({ formData }) {
   const { data } = useGetProductosQuery(undefined, {
@@ -25,6 +29,10 @@ function AddFacturasi({ formData }) {
     description: descriptionV,
   } = values;
 
+  const { data: productos_query } = useGetProductosFiltersQuery(undefined, {
+    refetchOnReconnect: true,
+  });
+
   const handleValueChange = (value) => {
     const isPaid = value === "Pagado";
     setFieldValue(paid.name, isPaid);
@@ -36,20 +44,11 @@ function AddFacturasi({ formData }) {
       <div className="md:mt-1.625">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="col-span-1 md:col-span-2">
-            <FormField
-              type={producto.type}
-              label={producto.label}
-              name={producto.name}
-              value={productoV}
-              placeholder={producto.placeholder}
-              onBlur={handleBlur}
-              as={
-                <Select>
-                  {data?.map((producto) => {
-                    <SelectItem key={producto.id}>{producto.name}</SelectItem>;
-                  })}
-                </Select>
-              }
+            <TransferList
+              title={producto.label}
+              initialLeft={productos_query}
+              initialRight={productoV}
+              onChange={(data) => setFieldValue(producto.name, data)}
             />
           </div>
         </div>
@@ -75,6 +74,11 @@ function AddFacturasi({ formData }) {
               value={costV}
               placeholder={cost.placeholder}
               onBlur={handleBlur}
+              onInput={(e) => {
+                let value = ("" + e.target.value).replace(/[^(\d|.)]/g, "");
+                e.target.value =
+                  value === "" ? "" : isNaN(Number(value)) ? "" : Number(value);
+              }}
             />
           </div>
         </div>

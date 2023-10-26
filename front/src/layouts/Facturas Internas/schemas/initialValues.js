@@ -12,12 +12,12 @@ const {
 } = checkout;
 
 const initialValues = {
-  [producto.name]: "",
+  [producto.name]: [],
   [worker_in_charge.name]: "",
   [cost.name]: "",
   [date_created.name]: "",
   [description.name]: "",
-  [paid.name]: "",
+  [paid.name]: false,
 };
 
 export default initialValues;

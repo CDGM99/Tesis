@@ -7,6 +7,11 @@ import { pagopApi } from "../services/PagoPServices";
 import { facturasiApi } from "../services/FacturasIServices";
 import { salidaseApi } from "../services/SalidaseServices";
 import { sendEmailApi } from "../services/send.email";
+import { loginLogOutApi } from "../services/Seguridad";
+import { graficaVentasApi } from "../services/GraficaVentas";
+import { graficaProductosApi } from "../services/GraficaProductos";
+import { usuariosApi } from "../services/Usuarios";
+import { groupsApi } from "../services/Groups";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +23,11 @@ export const store = configureStore({
     [facturasiApi.reducerPath]: facturasiApi.reducer,
     [salidaseApi.reducerPath]: salidaseApi.reducer,
     [sendEmailApi.reducerPath]: sendEmailApi.reducer,
+    [loginLogOutApi.reducerPath]: loginLogOutApi.reducer,
+    [graficaVentasApi.reducerPath]: graficaVentasApi.reducer,
+    [graficaProductosApi.reducerPath]: graficaProductosApi.reducer,
+    [usuariosApi.reducerPath]: usuariosApi.reducer,
+    [groupsApi.reducerPath]: groupsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({}).concat([
@@ -29,6 +39,11 @@ export const store = configureStore({
       facturasiApi.middleware,
       salidaseApi.middleware,
       sendEmailApi.middleware,
+      loginLogOutApi.middleware,
+      graficaVentasApi.middleware,
+      graficaProductosApi.middleware,
+      usuariosApi.middleware,
+      groupsApi.middleware,
     ]),
 });
 

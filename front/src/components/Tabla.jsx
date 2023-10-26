@@ -135,7 +135,7 @@ export function Tabla({
         </Table>
         <div className="flex flex-col sm:flex-row gap-5 justify-between items-center">
           <div className="grid grid-cols-2 items-center gap-3 pl-2">
-            <p className="text-xs font-medium">Filas por pagina</p>
+            <p className="text-xs font-medium">Filas por página</p>
             <Select
               value={table.getState().pagination.pageSize}
               onValueChange={(value) => {
@@ -251,7 +251,7 @@ export function Tabla({
               </Button>
             </div>
             <div className="grid grid-cols-2 gap-1">
-              <p className="w-full text-center sm:text-left text-xs">Pagina</p>
+              <p className="w-full text-center sm:text-left text-xs">Página</p>
               <strong className="w-full text-center text-xs sm:text-left">
                 {table.getState().pagination.pageIndex + 1} de{" "}
                 {table.getPageCount()}

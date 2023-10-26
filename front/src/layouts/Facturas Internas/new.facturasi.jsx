@@ -48,9 +48,13 @@ function NewFacturasi() {
   const [getFacturasiById, { data: facturasi }] =
     useLazyGetFacturasiByIdQuery();
   const submitForm = async (values, actions) => {
+    const { producto, ...rest } = values;
     try {
       if (!id) {
-        await createFacturasi(values);
+        await createFacturasi({
+          ...rest,
+          producto: producto.map((el) => el.id),
+        });
       } else {
         const modifiedFields = getModifiedFields(oldValues, values);
         if (Object.keys(modifiedFields).length !== 0) {
@@ -78,12 +82,12 @@ function NewFacturasi() {
         <div className="w-full lg:w-8/12">
           <div className="mt-6 mb-8 text-center">
             <div className="mb-1">
-              <h1 className="text-3xl font-bold">Facturas internas</h1>
+              <h1 className="text-3xl font-bold">Nueva factura interna</h1>
             </div>
             <div className="text-xl font-normal text-black">
               {!id
-                ? "Introduzca la información relacionada a las facturas internas por agregar"
-                : "Edite la información relacionada a las facturas internas"}
+                ? "Introduzca la información relacionada a la factura interna por agregar"
+                : "Edite la información relacionada a la factura interna"}
             </div>
           </div>
           <Formik

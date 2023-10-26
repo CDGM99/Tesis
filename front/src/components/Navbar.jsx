@@ -15,9 +15,12 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Menu } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useLogoutMutation } from "../services/Seguridad";
 
 const Navbar = ({ links }) => {
   const path = useLocation();
+  const [logout, { isError, isSuccess, isLoading, error }] =
+    useLogoutMutation();
   return (
     // hay que hacer otro div por fuera de los grandes de abajo
     <div className="flex flex-row justify-between ">
@@ -33,11 +36,8 @@ const Navbar = ({ links }) => {
               <div className="flex flex-col py-2">
                 <SheetHeader>
                   <SheetTitle>
-                    <div className="flex gap-2 items-center justify-center">
-                      <img
-                        src="/WhatsApp Image 2023-09-14 at 3.35.22 AM (22).jpeg"
-                        alt="hello"
-                      />
+                    <div className="flex gap-2 items-center justify-center pr-4">
+                      <img src="/CBM_1.png" alt="hello" className=" h-[50px]" />
                     </div>
                   </SheetTitle>
                 </SheetHeader>
@@ -49,6 +49,14 @@ const Navbar = ({ links }) => {
                           path === el.url &&
                           "bg-slate-400/60 text-black font-normal"
                         }`}
+                        onClick={() => {
+                          console.log(el.url);
+                          if (el.url === "/") {
+                            return logout();
+                          } else {
+                            console.log("sirve");
+                          }
+                        }}
                       >
                         {el.name}
                       </div>
@@ -71,9 +79,9 @@ const Navbar = ({ links }) => {
         </Sheet>
       </div>
 
-      <div className="flex flex-row justify-end gap-2 px-6 py-3">
+      {/* <div className="flex flex-row justify-end gap-2 px-6 py-3">
         <div className="flex">
-          {path.pathname === "/dashboard" ? (
+          {path.pathname === "/dashboard" || path.pathname === "/dashe" ? (
             ""
           ) : (
             <Avatar>
@@ -82,7 +90,7 @@ const Navbar = ({ links }) => {
             </Avatar>
           )}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

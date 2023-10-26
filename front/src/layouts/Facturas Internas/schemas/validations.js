@@ -14,7 +14,6 @@ const {
 
 const validations = [
   Yup.object().shape({
-    [producto.name]: Yup.string().required(producto.errorMsg),
     [worker_in_charge.name]: Yup.string().required(worker_in_charge.errorMsg),
     [paid.name]: Yup.string().required(paid.errorMsg),
     [cost.name]: Yup.string().required(cost.errorMsg),

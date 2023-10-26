@@ -61,7 +61,7 @@ function NewProducto() {
     try {
       if (!id) {
         await createProducto(values).then((res) => {
-          SendEmail({ correo: "ztazhorde@gmail.com" });
+          SendEmail({ correo: "roxanaturroaranda@gmail.com" });
         });
       } else {
         const modifiedFields = getModifiedFields(oldValues, values);
@@ -90,7 +90,7 @@ function NewProducto() {
         <div className="w-full lg:w-8/12">
           <div className="mt-6 mb-8 text-center">
             <div className="mb-1">
-              <h1 className="text-3xl font-bold">Inventario</h1>
+              <h1 className="text-3xl font-bold">Nuevo Producto</h1>
             </div>
             <div className="text-xl font-normal text-black">
               {!id

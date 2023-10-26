@@ -77,12 +77,12 @@ function NewPagop() {
         <div className="w-full lg:w-8/12">
           <div className="mt-6 mb-8 text-center">
             <div className="mb-1">
-              <h1 className="text-3xl font-bold">Pago a proveedores</h1>
+              <h1 className="text-3xl font-bold">Nuevo proveedor</h1>
             </div>
             <div className="text-xl font-normal text-black">
               {!id
-                ? "Introduzca la información relacionada al pago de los proveedores por agregar"
-                : "Edite la información relacionada al pago de los proveedores"}
+                ? "Introduzca la información relacionada al proveedor por agregar"
+                : "Edite la información relacionada al proveedor"}
             </div>
           </div>
           <Formik

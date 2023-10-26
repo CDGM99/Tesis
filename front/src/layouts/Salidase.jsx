@@ -8,6 +8,9 @@ import {
   useDeleteSalidaseMutation,
   useGetSalidaseQuery,
 } from "../services/SalidaseServices";
+import Delete from "../components/Delete";
+import { Button } from "../components/ui/button";
+import { Trash } from "lucide-react";
 const Salidase = () => {
   const { data } = useGetSalidaseQuery(undefined, {
     refetchOnReconnect: true,
@@ -46,7 +49,7 @@ const Salidase = () => {
       {
         id: "productocost",
         accessorFn: (row) => row.producto.cost,
-        cell: (info) => info.getValue(),
+        cell: (info) => `$${info.getValue()}`,
         header: "Costo",
         footer: (props) => props.column.id,
       },
@@ -55,6 +58,25 @@ const Salidase = () => {
         accessorFn: (row) => row.producto.product_id,
         cell: (info) => info.getValue(),
         header: "ID",
+        footer: (props) => props.column.id,
+      },
+      {
+        id: "Opciones",
+        accessorFn: (row) => (
+          <div className="flex justify-center items-center gap-2">
+            <Delete
+              title={`Borrar ${row.producto.name}`}
+              message="¿Esta seguro que desea eliminar esta salida especial?"
+              action={() => deletePagop(row.id)}
+            >
+              <Button variant={"ghost"} size={"icon"}>
+                <Trash size={15} />
+              </Button>
+            </Delete>
+          </div>
+        ),
+        cell: (info) => info.getValue(),
+        header: "Opciones",
         footer: (props) => props.column.id,
       },
     ],

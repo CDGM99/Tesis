@@ -43,10 +43,10 @@ export default function Details({ title, message, children, id }) {
           <h3>En venta: {producto?.on_sale}</h3>
           <h3>Descripción: {producto?.description}</h3>
           <h3>Descripción corta: {producto?.short_description}</h3>
-          <h3>Precio: {producto?.price}</h3>
-          <h3>Precio regular: {producto?.regular_price}</h3>
+          <h3>Precio: ${producto?.price}</h3>
+          <h3>Precio regular: ${producto?.regular_price}</h3>
           <h3>Cantidad en inventario: {producto?.stock_quantity}</h3>
-          <h3>Costo: {producto?.cost}</h3>
+          <h3>Costo: ${producto?.cost}</h3>
           <h3>ID del producto: {producto?.product_id}</h3>
         </div>
         <AlertDialogFooter>

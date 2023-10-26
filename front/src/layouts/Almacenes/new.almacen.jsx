@@ -77,7 +77,7 @@ function NewAlmacen() {
         <div className="w-full lg:w-8/12">
           <div className="mt-6 mb-8 text-center">
             <div className="mb-1">
-              <h1 className="text-3xl font-bold">Almacenes</h1>
+              <h1 className="text-3xl font-bold">Nuevo almacen</h1>
             </div>
             <div className="text-xl font-normal text-black">
               {!id

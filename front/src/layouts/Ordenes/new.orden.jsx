@@ -88,7 +88,7 @@ function NewOrden() {
 
             {location.pathname.includes("/dashboard") ? (
               <>
-                <h1 className="text-3xl font-bold">Ordenes</h1>
+                <h1 className="text-3xl font-bold">Nueva orden</h1>
                 <div className="text-xl font-normal text-black">
                   {!id
                     ? "Introduzca la información relacionada a la orden por agregar"
@@ -97,7 +97,7 @@ function NewOrden() {
               </>
             ) : (
               <>
-                <h1 className="text-3xl font-bold">Ventas</h1>
+                <h1 className="text-3xl font-bold">Nueva venta</h1>
                 <div className="text-xl font-normal text-black">
                   {!id
                     ? "Introduzca la información relacionada a la venta por agregar"

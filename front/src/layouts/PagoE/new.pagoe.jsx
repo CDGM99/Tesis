@@ -77,12 +77,12 @@ function NewPagoe() {
         <div className="w-full lg:w-8/12">
           <div className="mt-6 mb-8 text-center">
             <div className="mb-1">
-              <h1 className="text-3xl font-bold">Pago a embajadores</h1>
+              <h1 className="text-3xl font-bold">Nuevo embajador</h1>
             </div>
             <div className="text-xl font-normal text-black">
               {!id
-                ? "Introduzca la información relacionada al pago de los embajadores por agregar"
-                : "Edite la información relacionada al pago de los embajadores"}
+                ? "Introduzca la información relacionada al embajador por agregar"
+                : "Edite la información relacionada al embajador"}
             </div>
           </div>
           <Formik

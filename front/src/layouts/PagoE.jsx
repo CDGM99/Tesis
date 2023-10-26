@@ -45,7 +45,7 @@ const PagoE = () => {
       {
         id: "retribution_for_sales",
         accessorFn: (row) => row.retribution_for_sales,
-        cell: (info) => info.getValue(),
+        cell: (info) => `$${info.getValue()}`,
         header: "Pago por ventas",
         footer: (props) => props.column.id,
       },

@@ -16,7 +16,10 @@ import NewPagop from "./layouts/PagoP/new.pagop";
 import NewPagoe from "./layouts/PagoE/new.pagoe";
 import NewOrden from "./layouts/Ordenes/new.orden";
 import NewProducto from "./layouts/Inventario/new.inventario";
-import { BarChart } from "./components/BarChart";
+import TablaMensual from "./layouts/TablaMensual";
+import TablaProductos from "./layouts/TablaProductos";
+import Usuarios from "./layouts/Usuarios";
+import NewUsuario from "./layouts/Usuarios/new.usuarios";
 
 function App() {
   return (
@@ -39,7 +42,7 @@ function App() {
         <Route path="facturasi" element={<Facturasi />}></Route>
         <Route path="facturasi/create" element={<NewFacturasi />}></Route>
         <Route path="facturasi/edit/:id" element={<NewFacturasi />}></Route>
-        <Route path="barchart" element={<BarChart />}></Route>
+        <Route path="tablamensual" element={<TablaMensual />}></Route>
       </Route>
 
       <Route path="/dashboard" element={<Dashboard />}>
@@ -54,7 +57,11 @@ function App() {
         <Route path="ordenes/create" element={<NewOrden />}></Route>
         <Route path="ordenes/edit/:id" element={<NewOrden />}></Route>
         <Route path="salidase" element={<Salidase />}></Route>
+        <Route path="tablaproductos" element={<TablaProductos />}></Route>
       </Route>
+      <Route path="usuarios" element={<Usuarios />}></Route>
+      <Route path="usuarios/edit/:id" element={<NewUsuario />}></Route>
+      <Route path="usuarios/create" element={<NewUsuario />}></Route>
     </Routes>
   );
 }

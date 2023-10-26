@@ -31,8 +31,8 @@ const Facturasi = () => {
       {
         id: "productos",
         accessorFn: (row) =>
-          Array.isArray(row.producto)
-            ? row.producto.map((producto) => producto.name).join(", ")
+          Array.isArray(row.productos)
+            ? row.productos.map((producto) => producto.name).join(", ")
             : "",
         cell: (info) => info.getValue(),
         header: "Productos",
@@ -48,7 +48,7 @@ const Facturasi = () => {
       {
         id: "cost",
         accessorFn: (row) => row.cost,
-        cell: (info) => info.getValue(),
+        cell: (info) => `$${info.getValue()}`,
         header: "Costo",
         footer: (props) => props.column.id,
       },

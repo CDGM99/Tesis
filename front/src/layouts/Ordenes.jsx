@@ -48,7 +48,7 @@ const Ordenes = () => {
       {
         id: "total",
         accessorFn: (row) => row.total,
-        cell: (info) => info.getValue(),
+        cell: (info) => `$${info.getValue()}`,
         header: "Pago total",
         footer: (props) => props.column.id,
       },
@@ -111,7 +111,7 @@ const Ordenes = () => {
       {
         id: "total",
         accessorFn: (row) => row.total,
-        cell: (info) => info.getValue(),
+        cell: (info) => `$${info.getValue()}`,
         header: "Pago total",
         footer: (props) => props.column.id,
       },

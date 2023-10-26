@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,6 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { useGetGraficaVentasQuery } from "../services/GraficaVentas";
 
 ChartJS.register(
   CategoryScale,
@@ -32,19 +33,6 @@ export const options = {
   },
 };
 
-export const op = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top",
-    },
-    title: {
-      display: true,
-      text: "Ventas por productos",
-    },
-  },
-};
-
 const labels = [
   "Enero",
   "Febrero",
@@ -60,18 +48,46 @@ const labels = [
   "Diciembre",
 ];
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "Cantidad de ventas",
-      data: [12, 19, 3, 5, 2, 3, 20, 15, 10, 12, 3, 19],
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-  ],
-};
 const TablaMensual = () => {
-  return <Bar options={options} data={data} />;
+  const [values, setValues] = useState();
+  const { data: orden_mes } = useGetGraficaVentasQuery(undefined, {
+    refetchOnReconnect: true,
+  });
+
+  useEffect(() => {
+    if (orden_mes) {
+      const ordenMesMap = orden_mes.reduce((acc, item) => {
+        const date = new Date(item.mes);
+        const month = date.getMonth() + 1;
+        acc[month] = item.total_ordenes;
+        console.log(month);
+
+        return acc;
+      }, {});
+
+      const dataMes = Array.from({ length: 12 }, (_, i) => ordenMesMap[i] || 0);
+      setValues(dataMes);
+    }
+  }, [orden_mes]);
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Cantidad de ventas",
+        data: values,
+        backgroundColor: "rgba(2, 128, 202, 0.8)",
+      },
+    ],
+  };
+
+  return (
+    <div className="flex py-48 h-full w-full justify-center items-center">
+      <div className="p-4 w-1/2 flex ">
+        <Bar options={options} data={data} />
+      </div>
+    </div>
+  );
 };
 
 export default TablaMensual;
