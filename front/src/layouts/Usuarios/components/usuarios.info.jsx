@@ -65,8 +65,8 @@ function AddUsuario({ formData, old }) {
   return (
     <div className="md:mt-4">
       <div className="md:mt-1.625">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="col-span-1 md:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="col-span-1">
             <FormField
               type={name.type}
               label={name.label}

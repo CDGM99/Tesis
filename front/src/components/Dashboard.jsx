@@ -18,7 +18,6 @@ const Dashboard = () => {
     { name: "Pre despacho", url: "/dashboard/ordenes" },
     { name: "Salidas Especiales", url: "/dashboard/salidase" },
     { name: "Gráfica de ventas", url: "/dashboard/tablaproductos" },
-    { name: "Salir", url: "/" },
   ];
 
   return (
@@ -30,7 +29,7 @@ const Dashboard = () => {
       <div className="flex flex-col justify-between w-full">
         <div className="flex flex-col h-auto w-auto">
           {/* navbar --------------------------------------------------------------------------------------------------------------------- */}
-          <div className="bg-[#0280CA]  flex flex-col drop-shadow-2xl rounded-b-lg ">
+          <div className="bg-[url('/navbar.jpeg')] flex flex-col drop-shadow-2xl rounded-b-lg ">
             {user.groups[0] === 4 ? (
               <Navbar links={enlacesNegocio} />
             ) : (

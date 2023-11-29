@@ -9,7 +9,8 @@ import {
 
 function AddPagop({ formData }) {
   const { formField, values, handleBlur, setFieldValue } = formData;
-  const { name, code, nit, contract, account, address, paid } = formField;
+  const { name, code, nit, contract, account, address, total, paid } =
+    formField;
   const {
     name: nameV,
     code: codeV,
@@ -17,6 +18,7 @@ function AddPagop({ formData }) {
     contract: contractV,
     account: accountV,
     address: addressV,
+    total: totalV,
     paid: paidV,
   } = values;
 
@@ -29,8 +31,8 @@ function AddPagop({ formData }) {
   return (
     <div className="md:mt-4">
       <div className="md:mt-1.625">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="col-span-1 md:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="col-span-1">
             <FormField
               type={name.type}
               label={name.label}
@@ -97,6 +99,18 @@ function AddPagop({ formData }) {
               name={address.name}
               value={addressV}
               placeholder={address.placeholder}
+              onBlur={handleBlur}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="col-span-1">
+            <FormField
+              type={total.type}
+              label={total.label}
+              name={total.name}
+              value={totalV}
+              placeholder={total.placeholder}
               onBlur={handleBlur}
             />
           </div>

@@ -20,6 +20,7 @@ import TablaMensual from "./layouts/TablaMensual";
 import TablaProductos from "./layouts/TablaProductos";
 import Usuarios from "./layouts/Usuarios";
 import NewUsuario from "./layouts/Usuarios/new.usuarios";
+import NewSalidase from "./layouts/SalidasE/new.salidase";
 
 function App() {
   return (
@@ -57,6 +58,8 @@ function App() {
         <Route path="ordenes/create" element={<NewOrden />}></Route>
         <Route path="ordenes/edit/:id" element={<NewOrden />}></Route>
         <Route path="salidase" element={<Salidase />}></Route>
+        <Route path="salidase/create" element={<NewSalidase />}></Route>
+        <Route path="salidase/edit/:id" element={<NewSalidase />}></Route>
         <Route path="tablaproductos" element={<TablaProductos />}></Route>
       </Route>
       <Route path="usuarios" element={<Usuarios />}></Route>

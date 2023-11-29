@@ -17,7 +17,7 @@ const DashE = () => {
       <div className="flex flex-col justify-between w-full">
         <div className="flex flex-col h-auto w-auto">
           {/* navbar --------------------------------------------------------------------------------------------------------------------- */}
-          <div className="bg-[#0280CA]  flex flex-col drop-shadow-2xl rounded-b-lg ">
+          <div className="bg-[url('/navbar.jpeg')]  flex flex-col drop-shadow-2xl rounded-b-lg ">
             <Navbar
               links={[
                 { name: "Inicio", url: "/dashe" },
@@ -26,7 +26,6 @@ const DashE = () => {
                 { name: "Pago a embajadores", url: "/dashe/pagoe" },
                 { name: "Pago a proveedores", url: "/dashe/pagop" },
                 { name: "Facturas Internas", url: "/dashe/facturasi" },
-                { name: "Salir", url: "/" },
               ]}
             />
           </div>

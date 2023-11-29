@@ -10,9 +10,11 @@ import {
 import { useNavigate } from "react-router-dom";
 import DeleteInventario from "../components/DeleteInventario";
 import Details from "../components/Details";
+import useUser from "../hooks/user";
 
 const Inventario = () => {
   const navigate = useNavigate();
+  const [user] = useUser();
 
   const [
     deleteProductos,
@@ -27,7 +29,55 @@ const Inventario = () => {
   const { data } = useGetProductosQuery(undefined, {
     refetchOnReconnect: true,
   });
-  const dataProductos = {
+
+  const dataProductosNegocio = {
+    columns: [
+      {
+        id: "nombre",
+        accessorFn: (row) => row.name,
+        cell: (info) => info.getValue(),
+        header: "Nombre",
+        footer: (props) => props.column.id,
+      },
+      {
+        id: "sku",
+        accessorFn: (row) => row.sku,
+        cell: (info) => info.getValue(),
+        header: "SKU",
+        footer: (props) => props.column.id,
+      },
+      {
+        id: "stock_quantity",
+        accessorFn: (row) => row.stock_quantity,
+        cell: (info) => info.getValue(),
+        header: "Cantidad en inventario",
+        footer: (props) => props.column.id,
+      },
+      {
+        id: "brand",
+        accessorFn: (row) => row.brand,
+        cell: (info) => info.getValue(),
+        header: "Marca",
+        footer: (props) => props.column.id,
+      },
+      {
+        id: "type",
+        accessorFn: (row) => row.type,
+        cell: (info) => info.getValue(),
+        header: "Tipo",
+        footer: (props) => props.column.id,
+      },
+      {
+        id: "product_id",
+        accessorFn: (row) => row.product_id,
+        cell: (info) => info.getValue(),
+        header: "ID del producto",
+        footer: (props) => props.column.id,
+      },
+    ],
+    rows: data ?? [],
+  };
+  const dataProductosAdmin = {
     columns: [
       {
         id: "nombre",
@@ -117,17 +167,25 @@ const Inventario = () => {
         <h1 className="text-center font-semibold text-[3rem] text-[#0280CA]">
           Inventario
         </h1>
-        <Button
-          variant="ghost"
-          onClick={() => {
-            navigate(`/dashboard/inventario/create`);
-          }}
-        >
-          <PlusSquare size={40} color="#0280CA" />
-        </Button>{" "}
+        {user.groups[0] === 4 ? (
+          ""
+        ) : (
+          <Button
+            variant="ghost"
+            onClick={() => {
+              navigate(`/dashboard/inventario/create`);
+            }}
+          >
+            <PlusSquare size={40} color="#0280CA" />
+          </Button>
+        )}
       </div>
       <div className="flex">
-        <Tabla data={dataProductos} />
+        {user.groups[0] === 4 ? (
+          <Tabla data={dataProductosNegocio} />
+        ) : (
+          <Tabla data={dataProductosAdmin} />
+        )}
       </div>
     </div>
   );

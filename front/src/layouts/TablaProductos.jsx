@@ -90,7 +90,7 @@ const TablaProductos = () => {
   return (
     <div className="flex py-48 h-full w-full justify-center items-center">
       <div className="p-4 w-1/2 flex ">
-        <Bar options={options} data={data} />;
+        <Bar options={options} data={data} />
       </div>
     </div>
   );

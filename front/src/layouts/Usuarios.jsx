@@ -1,6 +1,6 @@
 import { Tabla } from "../components/Tabla";
 import { Button } from "../components/ui/button";
-import { ArrowBigLeft, Pen, PlusSquare, Trash } from "lucide-react";
+import { ArrowBigLeft, Pen, PlusSquare, Reply, Trash } from "lucide-react";
 
 import React from "react";
 import Delete from "../components/Delete";
@@ -100,15 +100,20 @@ const Usuarios = () => {
   };
   return (
     <div className="flex flex-col p-10">
-      <div className="content-start">
-        <Button
-          variant="ghost"
-          onClick={() => {
-            navigate(`/inicio`);
-          }}
-        >
-          <ArrowBigLeft size={40} color="#0280CA" />
-        </Button>{" "}
+      <div className="flex justify-between">
+        <div className="content-start">
+          <img src="/CBM_1.png" alt="hello" className=" h-[30px]" />
+        </div>
+        <div className="content-end">
+          <Button
+            variant="ghost"
+            onClick={() => {
+              navigate(`/inicio`);
+            }}
+          >
+            <Reply size={40} color="#0280CA" />
+          </Button>{" "}
+        </div>
       </div>
       <div>
         <h1 className="text-center font-semibold text-[3rem] text-[#0280CA]">

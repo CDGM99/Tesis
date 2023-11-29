@@ -123,17 +123,7 @@ function NewOrden() {
                         res?.embajador,
                         true
                       );
-                      setFieldValue(
-                        formField.order_id.name,
-                        res?.order_id,
-                        true
-                      );
                       setFieldValue(formField.number.name, res?.number, true);
-                      setFieldValue(
-                        formField.order_key.name,
-                        res?.order_key,
-                        true
-                      );
                       setFieldValue(formField.status.name, res?.status, true);
                       setFieldValue(
                         formField.date_created.name,
@@ -145,35 +135,10 @@ function NewOrden() {
                         res?.date_modified,
                         true
                       );
-                      setFieldValue(
-                        formField.discount_total.name,
-                        res?.discount_total,
-                        true
-                      );
-                      setFieldValue(
-                        formField.discount_tax.name,
-                        res?.discount_tax,
-                        true
-                      );
-                      setFieldValue(
-                        formField.shipping_total.name,
-                        res?.shipping_total,
-                        true
-                      );
-                      setFieldValue(
-                        formField.cart_tax.name,
-                        res?.cart_tax,
-                        true
-                      );
                       setFieldValue(formField.total.name, res?.total, true);
                       setFieldValue(
                         formField.customer_id.name,
                         res?.customer_id,
-                        true
-                      );
-                      setFieldValue(
-                        formField.customer_user_agent.name,
-                        res?.customer_user_agent,
                         true
                       );
                       setFieldValue(
@@ -194,16 +159,6 @@ function NewOrden() {
                       setFieldValue(
                         formField.shipping_address.name,
                         res?.shipping_address,
-                        true
-                      );
-                      setFieldValue(
-                        formField.payment_method.name,
-                        res?.payment_method,
-                        true
-                      );
-                      setFieldValue(
-                        formField.date_paid.name,
-                        res?.date_paid,
                         true
                       );
                       setFieldValue(formField.paid.name, res?.paid, true);
@@ -238,13 +193,13 @@ function NewOrden() {
                                 ? navigate(`/dashboard/ordenes`)
                                 : navigate(`/dashe/ordenes`);
                             }}
-                            className="bg-primary text-white px-4 py-2 rounded-md"
+                            className="bg-dark text-black px-4 py-2 rounded-md"
                           >
                             Cancelar
                           </button>
                           <button
                             type="submit"
-                            className="bg-dark text-blue-400 px-4 py-2 rounded-md"
+                            className="bg-primary text-white px-4 py-2 rounded-md"
                           >
                             Aceptar
                           </button>

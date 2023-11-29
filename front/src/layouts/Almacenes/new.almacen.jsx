@@ -119,6 +119,7 @@ function NewAlmacen() {
                             formField,
                             errors,
                             handleBlur,
+                            setFieldValue,
                           }}
                         />
                         <div className="mt-2 w-full flex justify-between">
@@ -126,13 +127,13 @@ function NewAlmacen() {
                             onClick={(e) => {
                               navigate("/dashboard/almacenes");
                             }}
-                            className="bg-primary text-white px-4 py-2 rounded-md"
+                            className="bg-dark text-black px-4 py-2 rounded-md"
                           >
                             Cancelar
                           </button>
                           <button
                             type="submit"
-                            className="bg-dark text-blue-400 px-4 py-2 rounded-md"
+                            className="bg-primary text-white px-4 py-2 rounded-md"
                           >
                             Aceptar
                           </button>

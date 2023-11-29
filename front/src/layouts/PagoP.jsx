@@ -42,6 +42,13 @@ const PagoP = () => {
         footer: (props) => props.column.id,
       },
       {
+        id: "total",
+        accessorFn: (row) => row.total,
+        cell: (info) => `$${info.getValue()}`,
+        header: "Total a pagar",
+        footer: (props) => props.column.id,
+      },
+      {
         id: "paid",
         accessorFn: (row) => row.paid,
         cell: (info) => (info.getValue() ? "Pagado" : "No Pagado"),

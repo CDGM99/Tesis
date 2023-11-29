@@ -1,7 +1,7 @@
 import checkout from "./form";
 
 const {
-  formField: { name, nit, contract, account, address, paid },
+  formField: { name, nit, contract, account, address, total, paid },
 } = checkout;
 
 const initialValues = {
@@ -10,6 +10,7 @@ const initialValues = {
   [contract.name]: "",
   [account.name]: "",
   [address.name]: "",
+  [total.name]: "",
   [paid.name]: "",
 };
 

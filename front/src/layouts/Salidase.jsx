@@ -1,8 +1,5 @@
 import { Tabla } from "../components/Tabla";
-// import { Button } from "../components/ui/button";
-// import { Pen, PlusSquare, Trash } from "lucide-react";
 import React from "react";
-// import Delete from "../components/Delete";
 import { useNavigate } from "react-router-dom";
 import {
   useDeleteSalidaseMutation,
@@ -10,8 +7,11 @@ import {
 } from "../services/SalidaseServices";
 import Delete from "../components/Delete";
 import { Button } from "../components/ui/button";
-import { Trash } from "lucide-react";
+import { Pen, Trash } from "lucide-react";
+
 const Salidase = () => {
+  const navigate = useNavigate();
+
   const { data } = useGetSalidaseQuery(undefined, {
     refetchOnReconnect: true,
   });
@@ -64,6 +64,14 @@ const Salidase = () => {
         id: "Opciones",
         accessorFn: (row) => (
           <div className="flex justify-center items-center gap-2">
+            <Button
+              variant="ghost"
+              onClick={() => {
+                navigate(`/dashboard/salidase/edit/${row.id}`);
+              }}
+            >
+              <Pen size={15} />
+            </Button>{" "}
             <Delete
               title={`Borrar ${row.producto.name}`}
               message="¿Esta seguro que desea eliminar esta salida especial?"

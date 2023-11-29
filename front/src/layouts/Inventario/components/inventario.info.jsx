@@ -120,6 +120,22 @@ function AddProducto({ formData, old }) {
       setFieldValue(proveedor.name, foundItem.id, true);
     }
   };
+
+  const tipo = [
+    "Alimentos y Bebidas",
+    "Aseo",
+    "Combos Familiares",
+    "Infantil",
+    "Joyería y Bisutería",
+    "Mascotas",
+    "Muebles y Decoración",
+    "Peletería",
+    "Piezas de Carros",
+    "Ropa",
+    "Útiles del Hogar",
+    "Útiles y Herramientas",
+  ];
+
   return (
     <div className="md:mt-4">
       <div className="md:mt-1.625">
@@ -254,13 +270,24 @@ function AddProducto({ formData, old }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="col-span-1">
             <FormField
-              type={type.type}
-              label={type.label}
+              select
               name={type.name}
+              label={type.label}
               value={typeV}
-              placeholder={type.placeholder}
+              onValueChange={(value) => setFieldValue(type.name, value, true)}
               onBlur={handleBlur}
-            />
+            >
+              <SelectTrigger>
+                <SelectValue placeholder={"Seleccione"} />
+              </SelectTrigger>
+              <SelectContent>
+                {tipo.map((pageSize) => (
+                  <SelectItem key={pageSize} value={pageSize}>
+                    {pageSize}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </FormField>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

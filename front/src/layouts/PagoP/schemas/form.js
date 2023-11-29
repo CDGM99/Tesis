@@ -37,6 +37,12 @@ const form = {
       type: "text",
       errorMsg: "La Dirección es requerida.",
     },
+    total: {
+      name: "total",
+      label: "Total a pagar",
+      type: "text",
+      errorMsg: "El total a pagar es requerido.",
+    },
     paid: {
       name: "paid",
       label: "Pagado",

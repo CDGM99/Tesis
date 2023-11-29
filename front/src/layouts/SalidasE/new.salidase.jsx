@@ -5,11 +5,11 @@ import initialValues from "./schemas/initialValues";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
-  useCreatePagoeMutation,
-  useEditPagoeMutation,
-  useLazyGetPagoeByIdQuery,
-} from "../../services/PagoEServices";
-import AddPagoe from "./components/pagoe.info";
+  useCreateSalidaseMutation,
+  useEditSalidaseMutation,
+  useLazyGetSalidaseByIdQuery,
+} from "../../services/SalidaseServices";
+import AddSalidase from "./components/salidase.info";
 
 const getModifiedFields = (originalData, newData) => {
   return Object.fromEntries(
@@ -19,25 +19,25 @@ const getModifiedFields = (originalData, newData) => {
   );
 };
 
-function NewPagoe() {
+function NewSalidase() {
   const [
-    createPagoe,
+    createSalidase,
     {
       isSuccess: isSuccessC,
       isLoading: isLoadingC,
       isError: isErrorC,
       error: errorC,
     },
-  ] = useCreatePagoeMutation();
+  ] = useCreateSalidaseMutation();
   const [
-    editPagoe,
+    editSalidase,
     {
       isSuccess: isSuccessE,
       isLoading: isLoadingE,
       isError: isErrorE,
       error: errorE,
     },
-  ] = useEditPagoeMutation();
+  ] = useEditSalidaseMutation();
 
   const { id } = useParams();
   const { formId, formField } = form;
@@ -45,18 +45,18 @@ function NewPagoe() {
   const [oldValues, setOldValues] = useState();
   const navigate = useNavigate();
 
-  const [getPagoeById, { data: pagoe }] = useLazyGetPagoeByIdQuery();
+  const [getSalidaseById, { data: salidase }] = useLazyGetSalidaseByIdQuery();
   const submitForm = async (values, actions) => {
     try {
       if (!id) {
-        await createPagoe(values);
+        await createSalidase(values);
       } else {
         const modifiedFields = getModifiedFields(oldValues, values);
         if (Object.keys(modifiedFields).length !== 0) {
-          await editPagoe({ id: id, ...modifiedFields });
+          await editSalidase({ id: id, ...modifiedFields });
         }
       }
-      navigate("/dashe/pagoe");
+      navigate("/dashboard/salidase");
       if (isSuccessC || isSuccessE) {
         actions.setSubmitting(false);
         actions.resetForm();
@@ -77,12 +77,12 @@ function NewPagoe() {
         <div className="w-full lg:w-8/12">
           <div className="mt-6 mb-8 text-center">
             <div className="mb-1">
-              <h1 className="text-3xl font-bold">Nuevo embajador</h1>
+              <h1 className="text-3xl font-bold">Nueva salida especial</h1>
             </div>
             <div className="text-xl font-normal text-black">
               {!id
-                ? "Introduzca la información relacionada al embajador por agregar"
-                : "Edite la información relacionada al embajador"}
+                ? "Introduzca la información relacionada al la salida especial por agregar"
+                : "Edite la información relacionada al la salida especial"}
             </div>
           </div>
           <Formik
@@ -93,42 +93,15 @@ function NewPagoe() {
             {({ values, errors, touched, setFieldValue, handleBlur }) => {
               useEffect(() => {
                 if (id) {
-                  getPagoeById(id)
+                  getSalidaseById(id)
                     .unwrap()
                     .then((res) => {
                       setOldValues(res);
-                      setFieldValue(formField.name.name, res?.name, true);
                       setFieldValue(
-                        formField.refered_number.name,
-                        res?.refered_number,
+                        formField.output_description.name,
+                        res?.output_description,
                         true
                       );
-                      setFieldValue(
-                        formField.retribution_for_sales.name,
-                        res?.retribution_for_sales,
-                        true
-                      );
-                      setFieldValue(
-                        formField.retribution_for_fortnight.name,
-                        res?.retribution_for_fortnight,
-                        true
-                      );
-                      setFieldValue(
-                        formField.payment_date.name,
-                        res?.payment_date,
-                        true
-                      );
-                      setFieldValue(
-                        formField.payment_status.name,
-                        res?.payment_status,
-                        true
-                      );
-                      setFieldValue(
-                        formField.payment_method.name,
-                        res?.payment_method,
-                        true
-                      );
-                      setFieldValue(formField.paid.name, res?.paid, true);
                     });
                 }
               }, [id]);
@@ -138,20 +111,19 @@ function NewPagoe() {
                   <div className="h-full">
                     <div className="p-3">
                       <div>
-                        <AddPagoe
+                        <AddSalidase
                           formData={{
                             values,
                             touched,
                             formField,
                             errors,
                             handleBlur,
-                            setFieldValue,
                           }}
                         />
                         <div className="mt-2 w-full flex justify-between">
                           <button
                             onClick={(e) => {
-                              navigate("/dashe/pagoe");
+                              navigate("/dashboard/salidase");
                             }}
                             className="bg-dark text-black px-4 py-2 rounded-md"
                           >
@@ -177,4 +149,4 @@ function NewPagoe() {
   );
 }
 
-export default NewPagoe;
+export default NewSalidase;
